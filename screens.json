@@ -1,0 +1,42 @@
+{
+    "main": {
+	"import": "from libs.uix.baseclass.market import Main",
+	"object": "Main()",
+	"kv": "libs/uix/kv/stockapp.kv"
+    },
+	"first": {
+	"import": "from libs.uix.baseclass.firststock import FirstStock",
+	"object": "FirstStock()",
+	"kv": "libs/uix/kv/firststock.kv"
+	},
+	"second": {
+	"import": "from libs.uix.baseclass.secondstock import SecondStock",
+	"object": "SecondStock()",
+	"kv": "libs/uix/kv/secondstock.kv"
+	},
+	"third": {
+	"import": "from libs.uix.baseclass.thirdstock import ThirdStock",
+	"object": "ThirdStock()",
+	"kv": "libs/uix/kv/thirdstock.kv"
+	},
+	"fourth": {
+	"import": "from libs.uix.baseclass.fourthstock import FourthStock",
+	"object": "FourthStock()",
+	"kv": "libs/uix/kv/fourthstock.kv"
+	},
+	"fifth": {
+	"import": "from libs.uix.baseclass.fifthstock import FifthStock",
+	"object": "FifthStock()",
+	"kv": "libs/uix/kv/fifthstock.kv"
+	},
+	"sixth": {
+	"import": "from libs.uix.baseclass.sixthstock import SixthStock",
+	"object": "SixthStock()",
+	"kv": "libs/uix/kv/sixthstock.kv"
+	},
+	"portfolio": {
+	"import": "from libs.uix.baseclass.portfolio import Portfolio",
+	"object": "Portfolio()",
+	"kv": "libs/uix/kv/portfolio.kv"
+	}
+}

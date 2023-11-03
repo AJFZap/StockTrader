@@ -1,0 +1,94 @@
+#:kivy 2.2.1
+
+<FifthStock>:
+    name: 'fifth'
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 1
+
+        MDTopAppBar:
+            id: company_name
+            title: "S&P 500 index"
+            left_action_items: [["arrow-left", lambda x: root.BackToMenu()]]
+            right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+        MDBoxLayout:
+            id : graph
+            orientation: "vertical"
+            md_bg_color: "#1E1E15"
+            size_hint: 1, .9
+
+            canvas:
+                Color:
+                    rgba: 1, 0.5, 0.5, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        MDBoxLayout:
+            size_hint: 1, .1
+            pos_hint: {'center_x': 0.5}
+            padding: 5
+            spacing: 10
+
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            RoundedButton:
+                text: "Buy Stock"
+                theme_text_color: "Custom"
+                text_color: "black"
+                on_release: app.BuyStock(nav_drawer.name)
+  
+            RoundedButton:
+                text: "Sell Stock"
+                theme_text_color: "Custom"
+                text_color: "black"
+                on_release: app.SellStock(nav_drawer.name)
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        radius: (16, 0, 0, 16)
+        anchor: 'right'
+        type: 'modal'
+        name: '^GSPC'
+
+        MDNavigationDrawerMenu:
+            always_overscroll: False
+
+            MDNavigationDrawerHeader:
+                id: stock_ticker
+                title: nav_drawer.name
+                title_color: "#4a4939"
+                text: company_name.title
+                spacing: "4dp"
+                padding: "12dp", 0, 0, "56dp"
+            
+            MDNavigationDrawerLabel:
+                id: cash_hand
+                text: f"Cash on hand: ${round(app.get_running_app().userMoney, 2)}"
+
+            MDNavigationDrawerDivider:
+
+            MDNavigationDrawerLabel:
+                text: "Information"
+
+            DrawerLabelItem:
+                id: open_price
+                icon: "hand-extended"
+                text: f"Open Price: ${app.get_running_app().openPrice[nav_drawer.name]}"
+
+            DrawerLabelItem:
+                id: current_price
+                icon: "currency-usd"
+                text: f"Current Price: ${app.get_running_app().currentStockPrice[nav_drawer.name]}"
+            
+            DrawerClickableItem:
+                id: stocks_owned
+                icon: "wallet"
+                text_right_color: "#4a4939"
+                text: f"Stocks Owned: {app.get_running_app().ownedStocks[nav_drawer.name]}"

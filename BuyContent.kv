@@ -1,0 +1,54 @@
+#:kivy 2.2.1
+
+<BuyContent>:
+    sliderValue: 0
+
+    orientation: 'vertical'
+    spacing: "15dp"
+    size_hint_y: None
+    height: "230dp"
+    stockName: app.cont
+
+    MDLabel:
+        text: f"Cash on Hand: ${round(app.root.get_screen('main').userMoney, 2)}"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    MDLabel:
+        text: f"Current Stock Price: ${round(app.currentStockPrice[self.parent.stockName], 2)}"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    
+    MDLabel:
+        text: f"Owned Stocks: {app.ownedStocks[self.parent.stockName]}"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    MDSlider:
+        id: buy_slider
+        color: 'green'
+        thumb_color_active: "green"
+        hint: True
+        hint_bg_color: "green"
+        hint_text_color: "white"
+        hint_radius: [6, 0, 6, 0]
+        value: 0
+        max: int(app.root.get_screen('main').userMoney // app.get_running_app().pastStockValuesDict[self.parent.stockName]) # TODO see if i want always to buy whole stocks or can buy and sell fractions (Currently on whole).
+
+    MDBoxLayout:
+        spacing: "15dp"
+        MDFlatButton:
+            id: button_less
+            text: "-"
+            on_release: root.Decrease()
+
+        MDTextField:
+            id: text_input
+            hint_text: "Amount to buy"
+            helper_text: "How many do you want?"
+            helper_text_mode: "on_focus"
+            input_filter: "int"
+            text: str(int(buy_slider.value)) 
+            on_text_validate: root.Validation(self.text)
+
+        MDFlatButton:
+            id: button_more
+            text: "+"
+            on_release: root.Increment()

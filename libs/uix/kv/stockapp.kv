@@ -1,0 +1,660 @@
+#:kivy 2.2.1
+
+<Main>:
+    name: 'main'
+
+    userMoney: app.userMoney
+
+    MDBottomNavigation:
+        id: bottom_nav
+        selected_color_background: None
+        panel_color: "green"
+
+        MDBottomNavigationItem:
+            name: 'screen 1'
+            text: 'Guide'
+            icon: 'compass'
+            MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: 20
+                    spacing: 20
+                    fontSize: '30sp'
+
+                    canvas:
+                        Color:
+                            rgba: 0.5, 0.5, 0.5, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            source: ""
+
+                    MDLabel:
+                        text: "Follow Your Heart"
+                        # font_name: "fonts/Eurostile.ttf"
+                        halign: 'center'
+                        font_size: self.parent.fontSize
+                        size_hint: 1, .4
+                        pos_hint:{'center_y': 0.9}
+                    
+                    MDRoundFlatButton:
+                        text: "How To Invest"
+                        font_size: self.parent.fontSize
+                        # font_name: "fonts/Eurostile.ttf"
+                        size_hint: 1, .2
+                        pos_hint: {'center_x': 0.5}
+                        on_press: print("Not implemented yet")
+                    
+                    MDRoundFlatButton:
+                        text: "Recommended Stocks"
+                        font_size: self.parent.fontSize
+                        # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                        size_hint: 1, .2
+                        pos_hint: {'center_x': 0.5}
+                        on_press: print("Not implemented yet")
+
+        MDBottomNavigationItem:
+            name: 'screen 2'
+            text: 'Market'
+            icon: 'cash'
+            badge_icon: "numeric-6"
+            MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    height: self.minimum_height
+
+                    canvas:
+                        Color:
+                            rgba: 0.5, 0.5, 0.5, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            # source: "images/Sisyphus.png"
+
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    height: root.height*0.8
+                    width: root.width
+                    effect_cls: 'ScrollEffect'
+
+                    MDGridLayout:
+                        cols: 2
+                        padding: 20
+                        spacing: 20
+                        size_hint: 1, None
+                        height: self.minimum_height
+                        row_default_height: 400
+                        row_force_default: True
+                        fontSize: '30sp'
+                        
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "AAPL"
+                            screenGraph: "first"
+                            posDF: 0 # This holds the value of the position in the Data Frame, to be able to update the value.
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_o
+                                text: self.parent.name
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_open_o
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_price_o
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_diff_o
+                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.SellStock(self.parent.name)
+
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+                            
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "TSLA"
+                            screenGraph: "second"
+                            posDF: 0
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_t
+                                text: self.parent.name
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_open_t
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_price_t
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_diff_t
+                                text: app.GetPrice(self)
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+                            
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.SellStock(self.parent.name)
+                                
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+                        
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "GOOGL"
+                            screenGraph: "third"
+                            posDF: 0
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_th
+                                text: self.parent.name
+                                # font_name: ""
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_open_th
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_price_th
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_diff_th
+                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+                            
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.SellStock(self.parent.name)
+                                
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "AMZN"
+                            screenGraph: "fourth"
+                            posDF: 0
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_fo
+                                text: self.parent.name
+                                # font_name: ""
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_open_fo
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_price_fo
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_diff_fo
+                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+                            
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.SellStock(self.parent.name)
+                                
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "^GSPC"
+                            screenGraph: "fifth"
+                            posDF: 0
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_fi
+                                text: self.parent.name
+                                # font_name: ""
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_open_fi
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_price_fi
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+                            
+                            MDLabel:
+                                id: stock_diff_fi
+                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+                            
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.sellStock(self.parent.name)
+                                
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+
+                        MDCard:
+                            orientation: 'vertical'
+                            style: "filled"
+                            radius: [dp(20), dp(20), dp(20), dp(20)]
+                            padding: 10
+                            spacing: 10
+                            name: "^IXIC"
+                            screenGraph: "sixth"
+                            posDF: 0
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0.5, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: ""
+
+                            MDLabel:
+                                id: ticker_six
+                                text: self.parent.name
+                                # font_name: ""
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_open_six
+                                text: f"Open: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_price_six
+                                text: f"Price: {app.openPrice[self.parent.name]}"
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDLabel:
+                                id: stock_diff_six
+                                text: app.GetDifference(self)
+                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                                size_hint_y: None
+                                size: self.texture_size
+                                font_size: self.parent.parent.fontSize
+                                halign: 'center'
+
+                            MDRectangleFlatButton:
+                                text: "Buy Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.BuyStock(self.parent.name)
+
+                            MDRectangleFlatButton:
+                                text: "Sell Stock"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_release: app.SellStock(self.parent.name)
+
+                            MDRectangleFlatButton:
+                                text: "See Graphic"
+                                theme_text_color: "Custom"
+                                text_color: "green"
+                                line_color: "green"
+                                pos_hint: {'center_x': 0.5}
+                                size_hint: 0.8, None
+                                on_press: app.ToGraph(self)
+
+        MDBottomNavigationItem:
+            name: 'screen 3'
+            text: 'Profile'
+            icon: 'account'
+            MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: 20
+                    spacing: 20
+                    fontSize: '30sp'
+
+                    canvas:
+                        Color:
+                            rgba: 0.5, 0.5, 0.5, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            source: ""
+
+                    MDLabel:
+                        text: "Recent Trades: "
+                        # font_name: "fonts/Eurostile.ttf"
+                        halign: 'center'
+                        font_size: self.parent.fontSize
+                        size_hint: 1, .4
+                        pos_hint:{'center_y': 0.9}
+                    
+                    ScrollView:
+                        do_scroll_x: False
+                        do_scroll_y: True
+                        width: root.width
+                        pos: root.pos
+                        effect_cls: "ScrollEffect"
+                        GridLayout:
+                            id: recent_trades
+                            cols: 1
+                            orientation: 'bt-rl'
+                            size_hint_y: None
+                            height: self.minimum_height
+                            halign: 'left'
+                            spacing: 30
+                            padding: 20
+                    
+                    MDRoundFlatButton:
+                        text: "Portfolio"
+                        font_size: self.parent.fontSize
+                        # font_name: "fonts/Eurostile.ttf"
+                        size_hint: 0.8, .2
+                        pos_hint: {'center_x': 0.5}
+                        on_press: app.ToGraph(self)
+                    
+                    MDRoundFlatButton:
+                        text: "Trade History"
+                        font_size: self.parent.fontSize
+                        # font_name: "fonts/Eurostile.ttf"
+                        size_hint: 0.8, .2
+                        pos_hint: {'center_x': 0.5}
+                        on_press: print("Not implemented Yet")
+
+## Things needed for the graphics on the stock screens. If each one has this declarations then it will raise a warning, so better have them here.
+<DrawerClickableItem@MDNavigationDrawerItem>
+    focus_color: "#e7e4c0"
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    ripple_color: "#c5bdd2"
+    selected_color: "#0c6c4d"
+
+<DrawerLabelItem@MDNavigationDrawerItem>
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    focus_behavior: False
+    selected_color: "#4a4939"
+    _no_ripple_effect: True
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (76/255,174/255,81/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
