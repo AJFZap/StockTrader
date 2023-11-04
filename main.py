@@ -8,15 +8,14 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
+from random import randint
 from kivy.app import App
 import pandas as pd
 import yfinance as yf
 import datetime
 # import numpy as np
 
-# TODO Make the OpenPrice and currentStockPrice random with the data from the DFs.
 # TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
-# TODO Make the Full history of stock traded in screen 3.
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -26,7 +25,8 @@ gspc = pd.read_csv('stocksDB/gspc.csv')
 ixic = pd.read_csv('stocksDB/ixic.csv')
 
 class StockApp(MDApp):
-    openPrice = {"AAPL": round(float(aapl.iloc[0]['Open']),2), "TSLA": round(float(tsla.iloc[0]['Open']),2), "GOOGL": round(float(googl.iloc[0]['Open']),2), "AMZN": round(float(amzn.iloc[0]['Open']),2), "^GSPC": round(float(gspc.iloc[0]['Open']),2), "^IXIC": round(float(ixic.iloc[0]['Open']),2)}
+    randomRow = randint(0, aapl.shape[0]) # selects a random number that represents the position on the dataframe.
+    openPrice = {"AAPL": round(float(aapl.iloc[randomRow]['Open']),2), "TSLA": round(float(tsla.iloc[randomRow]['Open']),2), "GOOGL": round(float(googl.iloc[randomRow]['Open']),2), "AMZN": round(float(amzn.iloc[randomRow]['Open']),2), "^GSPC": round(float(gspc.iloc[randomRow]['Open']),2), "^IXIC": round(float(ixic.iloc[randomRow]['Open']),2)}
     pastStockValuesDict = {"AAPL": openPrice["AAPL"], "TSLA": openPrice["TSLA"], "GOOGL": openPrice["GOOGL"], "AMZN": openPrice["AMZN"], "^GSPC": openPrice["^GSPC"], "^IXIC": openPrice["^IXIC"]}
     currentStockPrice = {"AAPL": openPrice["AAPL"], "TSLA": openPrice["TSLA"], "GOOGL": openPrice["GOOGL"], "AMZN": openPrice["AMZN"], "^GSPC": openPrice["^GSPC"], "^IXIC": openPrice["^IXIC"]}
     stockDiffDict = {"AAPL": "", "TSLA": "", "GOOGL": "", "AMZN": "", "^GSPC": "", "^IXIC": ""}
@@ -92,6 +92,9 @@ class StockApp(MDApp):
         """
         name = args[0].parent.name
 
+        if args[0].parent.posDF >= aapl.shape[0]:
+            args[0].parent.posDF = (randint(0, aapl.shape[0]) - 1) # To ensure the we never go above the DF max amount of rows.
+
         match name:
             case '^GSPC':
                 price = gspc.iloc[args[0].parent.posDF]['Low']
@@ -119,20 +122,6 @@ class StockApp(MDApp):
                 self.currentStockPrice['AMZN'] = round(price, 2)
 
         return str(round(price, 2))
-
-    def GetOpen(self):
-        """
-        TODO decide if this one stays and changes according to the day.
-        """
-        for stock in self.stocks:
-            if stock[0] == '^':
-                company = yf.Ticker(stock)
-                open = company.info["open"]
-            else:
-                company = yf.Ticker(stock)
-                open = company.info["open"]
-
-            self.openPrice[stock] = open
 
     def GetDifference(self, stock):
         """
