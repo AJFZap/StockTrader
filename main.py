@@ -14,6 +14,7 @@ import yfinance as yf
 import datetime
 # import numpy as np
 
+# TODO Make the OpenPrice and currentStockPrice random with the data from the DFs.
 # TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
 # TODO Make the Full history of stock traded in screen 3.
 
@@ -36,8 +37,10 @@ class StockApp(MDApp):
     cont = '' # Holds the name of the stock the Dialog Content will display.
     stockHistory= [] # Holds all the transactions made by the user.
     userMoney = NumericProperty(10000.00)
+    
     dialogBuy = None
     dialogSell = None
+    dialogHistory = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -58,7 +61,7 @@ class StockApp(MDApp):
         self.root.set_current("main")
 
     def on_start(self):
-        Clock.schedule_interval(self.updateStocks, 2) # TODO Change size hint of every label on the cards to not get a Clock warning for iteration.
+        Clock.schedule_interval(self.updateStocks, 2)
         # print(self.root.get_screen("main").ids)
     
     def ToGraph(self, button):
@@ -266,12 +269,12 @@ class StockApp(MDApp):
 
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
-        if len(recentTradesLabels) >= 10:
+        if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
         recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
-        self.stockHistory.append(f"{day} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
+        self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
 
         ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
         if self.currentScreens[aka.stockName]:
@@ -305,12 +308,12 @@ class StockApp(MDApp):
 
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
-        if len(recentTradesLabels) >= 10:
+        if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
         recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
-        self.stockHistory.append(f"{day} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
+        self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
 
         ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
         if self.currentScreens[aka.stockName]:
@@ -322,9 +325,31 @@ class StockApp(MDApp):
             self.root.get_screen("portfolio").changes = True
         
         self.dialog.dismiss()
+    
+    def History(self, *args):
+        """
+        Opens the whole hsitory dialog box.
+        Containing dates and time of the trades made by the user.
+        """
+        if not self.dialogHistory:
+            self.dialog = MDDialog(
+                text="Trade History",
+                type= "custom",
+                content_cls=HistoryContent(),
+                buttons=[
+                    MDFlatButton(
+                        text="Close",
+                        theme_text_color="Custom",
+                        text_color=self.theme_cls.primary_color,
+                        on_release=self.CloseDialog,
+                        pos_hint={'center_x': .5}
+                    ),
+                ],
+            )
+        self.dialog.open()
 
 class BuyContent(MDBoxLayout):
-    Builder.load_file("BuyContent.kv")
+    Builder.load_file("buycontent.kv")
 
     sliderValue = NumericProperty()
 
@@ -363,7 +388,7 @@ class BuyContent(MDBoxLayout):
             self.ids.buy_slider.value = int(args[0])
 
 class SellContent(MDBoxLayout):
-    Builder.load_file("SellContent.kv")
+    Builder.load_file("sellcontent.kv")
 
     sliderValue = NumericProperty()
 
@@ -400,6 +425,16 @@ class SellContent(MDBoxLayout):
         else:
             self.ids.text_input.text = args[0]
             self.ids.sell_slider.value = int(args[0])
+
+class HistoryContent(MDBoxLayout):
+    Builder.load_file("historycontent.kv")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for label in App.get_running_app().stockHistory:
+            newLabel = MDLabel(text=label, font_size=  self.ids.all_trades.fontSize)
+            self.ids.all_trades.add_widget(newLabel)
 
 if __name__ == "__main__":
     StockApp().run()

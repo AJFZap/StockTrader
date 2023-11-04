@@ -1,0 +1,29 @@
+#:kivy 2.2.1
+
+<HistoryContent>:
+    orientation: 'vertical'
+    spacing: "15dp"
+    size_hint_y: None
+    height: "250dp"
+
+    MDLabel:
+        text: "Trade History"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        font_size: '30sp'
+        size_hint: 1, 0.3
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        effect_cls: "ScrollEffect"
+
+        GridLayout:
+            id: all_trades
+            cols: 1
+            orientation: 'bt-rl'
+            size_hint_y: None
+            height: self.minimum_height
+            halign: 'left'
+            spacing: 40
+            padding: 20
+            fontSize: '30sp'

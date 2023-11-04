@@ -74,19 +74,17 @@
                 ScrollView:
                     do_scroll_x: False
                     do_scroll_y: True
-                    height: root.height*0.8
-                    width: root.width
                     effect_cls: 'ScrollEffect'
 
                     MDGridLayout:
                         cols: 2
-                        padding: 20
+                        padding: 40
                         spacing: 20
                         size_hint: 1, None
                         height: self.minimum_height
                         row_default_height: 400
                         row_force_default: True
-                        fontSize: '30sp'
+                        fontSize: '25sp'
                         
                         MDCard:
                             orientation: 'vertical'
@@ -631,7 +629,7 @@
                         # font_name: "fonts/Eurostile.ttf"
                         size_hint: 0.8, .2
                         pos_hint: {'center_x': 0.5}
-                        on_press: print("Not implemented Yet")
+                        on_press: app.History()
 
 ## Things needed for the graphics on the stock screens. If each one has this declarations then it will raise a warning, so better have them here.
 <DrawerClickableItem@MDNavigationDrawerItem>
