@@ -1,6 +1,8 @@
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.clock import Clock
+from random import randint
+from kivymd.toast import toast
 from kivy.properties import NumericProperty
 from libs.uix.root import Root
 from kivymd.app import MDApp
@@ -8,14 +10,12 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
-from random import randint
 from kivy.app import App
 import pandas as pd
-import yfinance as yf
 import datetime
-# import numpy as np
 
 # TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
+# TODO Implement both buttons on SCREEN 1.
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -26,6 +26,7 @@ ixic = pd.read_csv('stocksDB/ixic.csv')
 
 class StockApp(MDApp):
     randomRow = randint(0, aapl.shape[0]) # selects a random number that represents the position on the dataframe.
+
     openPrice = {"AAPL": round(float(aapl.iloc[randomRow]['Open']),2), "TSLA": round(float(tsla.iloc[randomRow]['Open']),2), "GOOGL": round(float(googl.iloc[randomRow]['Open']),2), "AMZN": round(float(amzn.iloc[randomRow]['Open']),2), "^GSPC": round(float(gspc.iloc[randomRow]['Open']),2), "^IXIC": round(float(ixic.iloc[randomRow]['Open']),2)}
     pastStockValuesDict = {"AAPL": openPrice["AAPL"], "TSLA": openPrice["TSLA"], "GOOGL": openPrice["GOOGL"], "AMZN": openPrice["AMZN"], "^GSPC": openPrice["^GSPC"], "^IXIC": openPrice["^IXIC"]}
     currentStockPrice = {"AAPL": openPrice["AAPL"], "TSLA": openPrice["TSLA"], "GOOGL": openPrice["GOOGL"], "AMZN": openPrice["AMZN"], "^GSPC": openPrice["^GSPC"], "^IXIC": openPrice["^IXIC"]}
@@ -36,7 +37,7 @@ class StockApp(MDApp):
     spentOnStocks = {"AAPL": 0, "TSLA": 0, "GOOGL": 0, "AMZN": 0, "^GSPC": 0, "^IXIC": 0}
     cont = '' # Holds the name of the stock the Dialog Content will display.
     stockHistory= [] # Holds all the transactions made by the user.
-    userMoney = NumericProperty(10000.00)
+    userMoney = NumericProperty(100000.00)
     
     dialogBuy = None
     dialogSell = None
@@ -62,7 +63,38 @@ class StockApp(MDApp):
 
     def on_start(self):
         Clock.schedule_interval(self.updateStocks, 2)
+        Clock.schedule_interval(self.CheckRank, 5)
         # print(self.root.get_screen("main").ids)
+    
+    def CheckRank(self, *args):
+        """
+        Checks the total value of the user portfolio and cash to provide an according title.
+        """
+        RankAlias = self.root.get_screen("main").ids.rank
+        TotalValue = self.userMoney
+
+        for key in self.ownedStocks:
+            if self.ownedStocks[key]:
+                TotalValue += (self.ownedStocks[key] * self.currentStockPrice[key])
+        
+        if TotalValue < 10000:
+            RankAlias.text = "Deadbeat"
+        elif TotalValue == 10000:
+            RankAlias.text = "Newcomer"
+        elif TotalValue > 10000 and TotalValue < 25000:
+            RankAlias.text = "Apprentice"
+        elif TotalValue >= 25000 and TotalValue < 50000:
+            RankAlias.text = "Money Wise"
+        elif TotalValue >= 50000 and TotalValue < 100000:
+            RankAlias.text = "Prodigy"
+        elif TotalValue >= 100000 and TotalValue < 250000:
+            RankAlias.text = "Market Guru"
+        elif TotalValue >= 250000 and TotalValue < 500000:
+            RankAlias.text = "Smart Investor"
+        elif TotalValue >= 500000 and TotalValue < 1000000:
+            RankAlias.text = "Genius Investor"
+        else:
+            RankAlias.text = "Warren Buffett Advisor"
     
     def ToGraph(self, button):
         """
@@ -254,10 +286,21 @@ class StockApp(MDApp):
         self.userMoney -= round((int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName])), 2)
         self.spentOnStocks[aka.stockName] = round((self.spentOnStocks[aka.stockName] + (int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName]))), 2)
 
+        ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
+        if self.currentScreens[aka.stockName]:
+            self.root.get_screen(self.screenNames[aka.stockName]).ids.stocks_owned.text = f"Stocks Owned: {self.ownedStocks[aka.stockName]}"
+            self.root.get_screen(self.screenNames[aka.stockName]).ids.cash_hand.text = f"Cash on hand: ${round(self.userMoney, 2)}"
+        
+        #################### SCREEN 3 CHANGES ####################
+
         day = datetime.datetime.today()
 
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
+        
+        if len(self.stockHistory) == 0: # Removes the "No recent trades label.
+            self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[0])
+
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
         recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
@@ -265,11 +308,6 @@ class StockApp(MDApp):
 
         self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
 
-        ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
-        if self.currentScreens[aka.stockName]:
-            self.root.get_screen(self.screenNames[aka.stockName]).ids.stocks_owned.text = f"Stocks Owned: {self.ownedStocks[aka.stockName]}"
-            self.root.get_screen(self.screenNames[aka.stockName]).ids.cash_hand.text = f"Cash on hand: ${round(self.userMoney, 2)}"
-        
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:
             self.root.get_screen("portfolio").changes = True
@@ -293,21 +331,27 @@ class StockApp(MDApp):
         self.userMoney += round((int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName])), 2)
         self.spentOnStocks[aka.stockName] = round((self.spentOnStocks[aka.stockName] - (int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName]))), 2)
 
+        ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
+        if self.currentScreens[aka.stockName]:
+            self.root.get_screen(self.screenNames[aka.stockName]).ids.stocks_owned.text = f"Stocks Owned: {self.ownedStocks[aka.stockName]}"
+            self.root.get_screen(self.screenNames[aka.stockName]).ids.cash_hand.text = f"Cash on hand: ${round(self.userMoney, 2)}"
+
+        #################### SCREEN 3 CHANGES ####################
+
         day = datetime.datetime.today()
 
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
+        
+        if len(self.stockHistory) == 0: #  Removes the "No recent trades label.
+            self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[0])
+
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
         recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
         self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
-
-        ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
-        if self.currentScreens[aka.stockName]:
-            self.root.get_screen(self.screenNames[aka.stockName]).ids.stocks_owned.text = f"Stocks Owned: {self.ownedStocks[aka.stockName]}"
-            self.root.get_screen(self.screenNames[aka.stockName]).ids.cash_hand.text = f"Cash on hand: ${round(self.userMoney, 2)}"
         
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:
@@ -320,6 +364,10 @@ class StockApp(MDApp):
         Opens the whole hsitory dialog box.
         Containing dates and time of the trades made by the user.
         """
+        if len(self.stockHistory) == 0:
+            toast("No trades have been made yet.")
+            return
+        
         if not self.dialogHistory:
             self.dialog = MDDialog(
                 text="Trade History",
