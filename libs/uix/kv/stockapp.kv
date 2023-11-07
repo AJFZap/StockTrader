@@ -39,7 +39,7 @@
                     
                     MDLabel:
                         id: rank
-                        text: "Newcomer"
+                        text: ""
                         # font_name: "fonts/Eurostile.ttf"
                         halign: 'center'
                         font_size: '30sp'
@@ -52,7 +52,7 @@
                         # font_name: "fonts/Eurostile.ttf"
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
-                        on_press: print("Not implemented yet")
+                        on_press: app.root.set_current('settings')
                     
                     MDRoundFlatButton:
                         text: "Investing Guide"
@@ -625,7 +625,7 @@
                             orientation: 'bt-rl'
                             size_hint: 1, None
                             height: self.minimum_height
-                            halign: 'left'
+                            halign: 'center'
                             spacing: 30
                             padding: 20
 

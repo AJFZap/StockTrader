@@ -38,5 +38,10 @@
 	"import": "from libs.uix.baseclass.portfolio import Portfolio",
 	"object": "Portfolio()",
 	"kv": "libs/uix/kv/portfolio.kv"
+	},
+	"settings": {
+	"import": "from libs.uix.baseclass.settings import Settings",
+	"object": "Settings()",
+	"kv": "libs/uix/kv/settings.kv"
 	}
 }

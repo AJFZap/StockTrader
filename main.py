@@ -15,7 +15,11 @@ import pandas as pd
 import datetime
 
 # TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
-# TODO Implement both buttons on SCREEN 1.
+# TODO When the Rank changes also change the background, each rank has a distinct design.
+# TODO loading screen feature when changing to the plot screens (Portfolio and each stock graphic).
+# TODO Implement a save feature.
+# TODO Implement the "Investing Guide"
+
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -62,6 +66,7 @@ class StockApp(MDApp):
         self.root.set_current("main")
 
     def on_start(self):
+        self.CheckRank()
         Clock.schedule_interval(self.updateStocks, 2)
         Clock.schedule_interval(self.CheckRank, 5)
         # print(self.root.get_screen("main").ids)
