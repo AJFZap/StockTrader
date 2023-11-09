@@ -47,7 +47,7 @@
                         pos_hint:{'center_y': 0.9}
                     
                     MDRoundFlatButton:
-                        text: "Preferences\n&\nSettings"
+                        text: "Settings"
                         font_size: self.parent.fontSize
                         # font_name: "fonts/Eurostile.ttf"
                         size_hint: .8, .1
@@ -143,12 +143,13 @@
                             
                             MDLabel:
                                 id: stock_diff_o
-                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
+                                text: app.GetPrice(self)
                                 # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
                                 size_hint: 1, None
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
                             
                             MDRectangleFlatButton:
                                 text: "Buy Stock"
@@ -231,6 +232,7 @@
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
 
                             MDRectangleFlatButton:
                                 text: "Buy Stock"
@@ -313,6 +315,7 @@
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
 
                             MDRectangleFlatButton:
                                 text: "Buy Stock"
@@ -395,6 +398,7 @@
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
 
                             MDRectangleFlatButton:
                                 text: "Buy Stock"
@@ -477,6 +481,7 @@
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
 
                             MDRectangleFlatButton:
                                 text: "Buy Stock"
@@ -559,6 +564,7 @@
                                 size: self.texture_size
                                 font_size: self.parent.parent.fontSize
                                 halign: 'center'
+                                markup: True
 
                             MDRectangleFlatButton:
                                 text: "Buy Stock"

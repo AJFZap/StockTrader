@@ -24,9 +24,7 @@ class Portfolio(Screen):
         super().__init__(**kw)
         thing.currentScreens['portfolio'] = True
 
-        for key in thing.ownedStocks:
-            if thing.ownedStocks[key] > 0:
-                self.haveStocks = True
+        self.CheckStocks()
         
         if self.haveStocks == True:
             self.PlotPie()
@@ -54,11 +52,51 @@ class Portfolio(Screen):
                     )
         self.ids.table.add_widget(self.table)
     
+    def CheckStocks(self):
+        """
+        Checks if the user has stocks and sets the value of self.haveStock accordingly.
+        """
+        for key in thing.ownedStocks:
+            if thing.ownedStocks[key] > 0:
+                self.haveStocks = True
+                return
+        self.haveStocks = False
+        return     
+
     def Update(self):
         """
         When called the pie chart and the values of the stocks in the grid are updated IF self.changes is True.
         This function is called each time the portfolio screen selected.
         """
+        self.CheckStocks() # Checks if the user has stocks remaining.
+        
+        if self.haveStocks == False: # In case he doesn't then it changes the graph image to the base one.
+            self.ids.graph.source = "images/piechartbase.png"
+            self.ids.table.remove_widget(self.ids.table.children[0])
+            self.table = MDDataTable(
+                            size_hint=(1, 1),
+                            pos_hint= {'center_x': 0.5, 'center_y': 0.5},
+                            rows_num= 6,
+                            background_color_header= (76/255,174/255,81/255,1),
+                            column_data= [
+                                ("Stock", dp(17)),
+                                ("Amount", dp(17)),
+                                ("Total Payed", dp(17)),
+                                ("Total Value", dp(17))
+                            ],
+                            row_data= [
+                                ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
+                                ("TSLA",thing.ownedStocks["TSLA"],thing.spentOnStocks["TSLA"],round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)),
+                                ("GOOGL",thing.ownedStocks["GOOGL"],thing.spentOnStocks["GOOGL"],round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)),
+                                ("AMZN",thing.ownedStocks["AMZN"],thing.spentOnStocks["AMZN"],round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)),
+                                ("^GSPC",thing.ownedStocks["^GSPC"],thing.spentOnStocks["^GSPC"],round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)),
+                                ("^IXIC",thing.ownedStocks["^IXIC"],thing.spentOnStocks["^IXIC"],round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2))
+                            ] 
+                        )
+            self.ids.table.add_widget(self.table)
+            self.changes = False
+            return
+        
         if self.changes == True:
             self.ids.graph.source = "images/piechart.png" # To change the piechartbase image to the new location and be able to update it.
             self.PlotPie()

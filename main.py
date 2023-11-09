@@ -16,10 +16,8 @@ import datetime
 
 # TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
 # TODO When the Rank changes also change the background, each rank has a distinct design.
-# TODO loading screen feature when changing to the plot screens (Portfolio and each stock graphic).
 # TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
-
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -38,7 +36,7 @@ class StockApp(MDApp):
     ownedStocks = {"AAPL": 0, "TSLA": 0, "GOOGL": 0, "AMZN": 0, "^GSPC": 0, "^IXIC": 0}
     currentScreens = {"AAPL": False, "TSLA": False, "GOOGL": False, "AMZN": False, "^GSPC": False, "^IXIC": False, "portfolio": False}
     screenNames = {"AAPL": 'first', "TSLA": 'second', "GOOGL": 'third', "AMZN": 'fourth', "^GSPC": 'fifth', "^IXIC": 'sixth', "portfolio": 'portfolio'}
-    spentOnStocks = {"AAPL": 0, "TSLA": 0, "GOOGL": 0, "AMZN": 0, "^GSPC": 0, "^IXIC": 0}
+    spentOnStocks = {"AAPL": 0.00, "TSLA": 0.00, "GOOGL": 0.00, "AMZN": 0.00, "^GSPC": 0.00, "^IXIC": 0.00}
     cont = '' # Holds the name of the stock the Dialog Content will display.
     stockHistory= [] # Holds all the transactions made by the user.
     userMoney = NumericProperty(100000.00)
@@ -99,7 +97,7 @@ class StockApp(MDApp):
         elif TotalValue >= 500000 and TotalValue < 1000000:
             RankAlias.text = "Genius Investor"
         else:
-            RankAlias.text = "Warren Buffett Advisor"
+            RankAlias.text = "Warren Buffett's Advisor"
     
     def ToGraph(self, button):
         """
@@ -171,9 +169,9 @@ class StockApp(MDApp):
         self.pastStockValuesDict[stock.parent.name] =  self.currentStockPrice[stock.parent.name]
 
         if pastValue > self.currentStockPrice[stock.parent.name]:
-            return f'Diff: -{"{:,.2f}$".format(diff)} (-{"{:,.2f}%".format(diffPercent)})'
+            return f'Diff: [b][color=be3228]-{"{:,.2f}$".format(diff)} (-{"{:,.2f}%".format(diffPercent)})[/color][/b]' # Setting colors and Bold text on the labels.
         elif pastValue < self.currentStockPrice[stock.parent.name]:
-            return f'Diff: +{"{:,.2f}$".format(-diff)} (+{"{:,.2f}%".format(-diffPercent)})'
+            return f'Diff: [b][color=4CAE51]+{"{:,.2f}$".format(-diff)} (+{"{:,.2f}%".format(-diffPercent)})[/color][/b]'
         else:
             return "Diff: +/- 0 (+-0)$"
 
@@ -308,10 +306,10 @@ class StockApp(MDApp):
 
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
-        recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
+        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
-        self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
+        self.stockHistory.append(f"· {day.date()} {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
 
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:
@@ -332,9 +330,9 @@ class StockApp(MDApp):
         if int(aka.ids.text_input.text) > aka.ids.sell_slider.max:
             aka.ids.text_input.text = str(int(aka.ids.sell_slider.max))
 
+        self.spentOnStocks[aka.stockName] = round((self.spentOnStocks[aka.stockName] - (int(aka.ids.text_input.text) * (self.spentOnStocks[aka.stockName] / self.ownedStocks[aka.stockName]))), 2) # Just a fake relationship between the spent price and the amount of stocks that the user have, to avoid having the error of money spent over 0 when the user has no more stocks.
         self.ownedStocks[aka.stockName] -= int(aka.ids.text_input.text)
         self.userMoney += round((int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName])), 2)
-        self.spentOnStocks[aka.stockName] = round((self.spentOnStocks[aka.stockName] - (int(aka.ids.text_input.text) * float(self.pastStockValuesDict[aka.stockName]))), 2)
 
         ### Update the values from the stock screen drawer (Like the stocks owned and cash on hand).
         if self.currentScreens[aka.stockName]:
@@ -353,10 +351,10 @@ class StockApp(MDApp):
 
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
-        recent = MDLabel(text=f"{day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
+        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
-        self.stockHistory.append(f"{day.date()} {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
+        self.stockHistory.append(f"· {day.date()} {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
         
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:

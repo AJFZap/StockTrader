@@ -8,7 +8,7 @@
         spacing: 15
 
         MDTopAppBar:
-            title: "Preferences and Settings"
+            title: "Settings"
             left_action_items: [["arrow-left", lambda x: app.root.set_current('main')]]
 
         MDGridLayout:
@@ -23,13 +23,11 @@
 
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
             
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
 
@@ -43,7 +41,7 @@
 
             Spinner:
                 id: language_spinner
-                text: 'Language'
+                text: 'English'
                 values: ["English", "Spanish", "Japanese"]
                 # size_hint: .3, .3
                 on_text: root.Selection(self)
@@ -51,13 +49,11 @@
             
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
             
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
             
@@ -71,7 +67,7 @@
             
             Spinner:
                 id: currency_spinner
-                text: 'Currency'
+                text: 'USD'
                 values: ["USD", "Euro", "Argentine Peso"]
                 size_hint: 1, 1
                 on_text: root.Selection(self)
@@ -79,13 +75,11 @@
             
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
             
             MDLabel:
                 text: ""
-                # font_name: "fonts/Eurostile.ttf"
                 size_hint: 1, 1
                 size: self.texture_size
         
