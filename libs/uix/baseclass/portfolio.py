@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 thing = App.get_running_app()
 
-# plt.style.use('seaborn-v0_8-darkgrid')
 plt.style.use('fivethirtyeight')
 
 ### On this one we update the graphic transforming the matplot plot an image because Kivy_garden.matplotlib doesn't support pie charts.

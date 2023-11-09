@@ -18,6 +18,7 @@ import datetime
 # TODO When the Rank changes also change the background, each rank has a distinct design.
 # TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
+# TODO change the color of the Drawers and all the graphs.
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')

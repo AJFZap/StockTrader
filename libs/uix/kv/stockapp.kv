@@ -9,6 +9,7 @@
         id: bottom_nav
         selected_color_background: None
         panel_color: "green"
+        imageSource: 'images/stocksBG-1.png'
 
         MDBottomNavigationItem:
             name: 'screen 1'
@@ -27,7 +28,7 @@
                         Rectangle:
                             size: self.size
                             pos: self.pos
-                            source: ""
+                            source: bottom_nav.imageSource
 
                     MDLabel:
                         text: "Current Rank:"
@@ -78,7 +79,7 @@
                         Rectangle:
                             size: self.size
                             pos: self.pos
-                            # source: "images/Sisyphus.png"
+                            source: "images/stocksBG-3.png"
 
                 ScrollView:
                     do_scroll_x: False
@@ -98,21 +99,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "AAPL"
                             screenGraph: "first"
                             posDF: app.randomRow # This holds the value of the position in the Data Frame, to be able to update the value.
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_o
@@ -181,21 +174,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "TSLA"
                             screenGraph: "second"
                             posDF: app.randomRow
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_t
@@ -264,21 +249,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "GOOGL"
                             screenGraph: "third"
                             posDF: app.randomRow
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_th
@@ -347,21 +324,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "AMZN"
                             screenGraph: "fourth"
                             posDF: app.randomRow
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_fo
@@ -430,21 +399,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "^GSPC"
                             screenGraph: "fifth"
                             posDF: app.randomRow
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_fi
@@ -513,21 +474,13 @@
                         MDCard:
                             orientation: 'vertical'
                             style: "outlined"
-                            md_bg_color: (76/255,174/255,81/255,1)
+                            md_bg_color: (1/255,33/255,72/255,1)
                             radius: [dp(20), dp(20), dp(20), dp(20)]
                             padding: 10
                             spacing: 10
                             name: "^IXIC"
                             screenGraph: "sixth"
                             posDF: app.randomRow
-
-                            canvas:
-                                Color:
-                                    rgba: 0.5, 0.5, 0.5, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                                    source: ""
 
                             MDLabel:
                                 id: ticker_six
@@ -610,7 +563,7 @@
                         Rectangle:
                             size: self.size
                             pos: self.pos
-                            source: ""
+                            source: bottom_nav.imageSource
 
                     MDLabel:
                         text: "Recent Trades: "
