@@ -57,6 +57,9 @@ class FirstStock(Screen):
       ax.cla()
       ax.plot(times, stockPrice, label= f'Price: ${stockPrice[-1]}', marker='o')
       ax.plot(times, openPrice, label= f'Open Price: {openPrice[0]}', linestyle='--')
+
+      ax.fill_between(times, stockPrice, openPrice,where=np.asarray(stockPrice) > np.asarray(openPrice), interpolate=True, color='green', alpha=0.25)
+      ax.fill_between(times, stockPrice, openPrice, where=np.asarray(stockPrice) < np.asarray(openPrice), interpolate=True, color='red', alpha=0.25)
       
       ax.legend(ncol= 2,bbox_to_anchor = (0.5,1.15),loc='upper center', labelcolor='white', prop={'weight':'bold', 'size': 10})
     #   ax.text(times[-1] - 0.1, stockPrice[-1] + 0.4, s=str(stockPrice[-1]), ha='center', va='center')

@@ -18,7 +18,7 @@ import datetime
 # TODO When the Rank changes also change the background, each rank has a distinct design.
 # TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
-# TODO change the color of the Drawers and all the graphs.
+# TODO Update the Portfolio screen up to measure.
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -206,7 +206,8 @@ class StockApp(MDApp):
 
         if not self.dialogBuy:
             self.dialog = MDDialog(
-                text="Buy Stock",
+                title="Buy Stocks",
+                md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type="custom",
                 content_cls=BuyContent(),
@@ -237,7 +238,8 @@ class StockApp(MDApp):
 
         if not self.dialogSell:
             self.dialog = MDDialog(
-                text="Sell Stock",
+                title="Sell Stocks",
+                md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type= "custom",
                 content_cls=SellContent(),
@@ -374,7 +376,8 @@ class StockApp(MDApp):
         
         if not self.dialogHistory:
             self.dialog = MDDialog(
-                text="Trade History",
+                title="Trade History",
+                md_bg_color=(1/255,33/255,72/255,1),
                 type= "custom",
                 content_cls=HistoryContent(),
                 buttons=[

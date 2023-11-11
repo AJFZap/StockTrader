@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from kivy.clock import Clock
 
-# plt.style.use('fivethirtyeight')
 plt.style.use('seaborn-v0_8-darkgrid')
 
 thing = App.get_running_app()
@@ -19,7 +18,10 @@ fig,ax = plt.subplots()
 ax.plot(times, stockPrice, label= f'Price: ${stockPrice[-1]}', marker='o')
 ax.plot(times, openPrice, label= f'Open Price: {openPrice[0]}', linestyle='--')
 
-ax.legend(ncol= 2,bbox_to_anchor = (0.5,1.15),loc='upper center')
+ax.legend(ncol= 2,bbox_to_anchor = (0.5,1.15),loc='upper center', labelcolor='white', prop={'weight':'bold', 'size': 10})
+ax.set_facecolor('black')
+fig.set_facecolor((1/255,33/255,72/255,1))
+ax.tick_params(axis='y', colors='white')
 
 frame = plt.gca()
 
@@ -55,8 +57,11 @@ class SecondStock(Screen):
       ax.cla()
       ax.plot(times, stockPrice, label= f'Price: ${stockPrice[-1]}', marker='o')
       ax.plot(times, openPrice, label= f'Open Price: {openPrice[0]}', linestyle='--')
+
+      ax.fill_between(times, stockPrice, openPrice,where=np.asarray(stockPrice) > np.asarray(openPrice), interpolate=True, color='green', alpha=0.25)
+      ax.fill_between(times, stockPrice, openPrice, where=np.asarray(stockPrice) < np.asarray(openPrice), interpolate=True, color='red', alpha=0.25)
       
-      ax.legend(ncol= 2,bbox_to_anchor = (0.5,1.15),loc='upper center')
+      ax.legend(ncol= 2,bbox_to_anchor = (0.5,1.15),loc='upper center', labelcolor='white', prop={'weight':'bold', 'size': 10})
     #   ax.text(times[-1] - 0.1, stockPrice[-1] + 0.4, s=str(stockPrice[-1]), ha='center', va='center')
       
       self.ids.graph.children[0].draw()

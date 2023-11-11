@@ -18,13 +18,6 @@
             md_bg_color: "#1E1E15"
             size_hint: 1, .9
 
-            canvas:
-                Color:
-                    rgba: 1, 0.5, 0.5, 1
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-
         MDBoxLayout:
             size_hint: 1, .1
             pos_hint: {'center_x': 0.5}
@@ -33,29 +26,35 @@
 
             canvas:
                 Color:
-                    rgba: 1, 1, 1, 1
+                    rgba: (1/255,33/255,72/255,1)
                 Rectangle:
                     size: self.size
                     pos: self.pos
 
             RoundedButton:
                 text: "Buy Stock"
-                theme_text_color: "Custom"
-                text_color: "black"
+                color: "black"
                 on_release: app.BuyStock(nav_drawer.name)
   
             RoundedButton:
                 text: "Sell Stock"
-                theme_text_color: "Custom"
-                text_color: "black"
+                color: "black"
                 on_release: app.SellStock(nav_drawer.name)
 
     MDNavigationDrawer:
         id: nav_drawer
-        radius: (16, 0, 0, 16)
+        radius: (25, 0, 0, 25)
         anchor: 'right'
         type: 'modal'
         name: 'GOOGL'
+
+        canvas:
+            Color:
+                rgba: (1/255,33/255,72/255,1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [25,0,0,25]
 
         MDNavigationDrawerMenu:
             always_overscroll: False
@@ -63,7 +62,7 @@
             MDNavigationDrawerHeader:
                 id: stock_ticker
                 title: nav_drawer.name
-                title_color: "#4a4939"
+                title_color: "#D4D4D9"
                 text: company_name.title
                 spacing: "4dp"
                 padding: "12dp", 0, 0, "56dp"
@@ -71,11 +70,13 @@
             MDNavigationDrawerLabel:
                 id: cash_hand
                 text: f"Cash on hand: ${round(app.get_running_app().userMoney, 2)}"
+                text_color: "#D4D4D9"
 
             MDNavigationDrawerDivider:
 
             MDNavigationDrawerLabel:
                 text: "Information"
+                text_color: "#D4D4D9"
 
             DrawerLabelItem:
                 id: open_price
@@ -87,8 +88,7 @@
                 icon: "currency-usd"
                 text: f"Current Price: ${app.get_running_app().currentStockPrice[nav_drawer.name]}"
             
-            DrawerClickableItem:
+            DrawerLabelItem:
                 id: stocks_owned
                 icon: "wallet"
-                text_right_color: "#4a4939"
                 text: f"Stocks Owned: {app.get_running_app().ownedStocks[nav_drawer.name]}"
