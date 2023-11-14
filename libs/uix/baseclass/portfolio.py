@@ -1,3 +1,4 @@
+from kivy.core.window import Window
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.datatables import MDDataTable
@@ -8,11 +9,17 @@ thing = App.get_running_app()
 
 plt.style.use('fivethirtyeight')
 
+fig = plt.figure()
+fig.patch.set_facecolor('#012148d9')
+
 ### On this one we update the graphic transforming the matplot plot an image because Kivy_garden.matplotlib doesn't support pie charts.
+### To change the background color of the MDDataTable I overrided the MDDataTable file in the kivymd.uix.datatables location.
+### If for whatever reason you want the Data Table to adapt to different sizes of screen on update the just add the same 'self.dpAssign = Window.size[0]/22' on the Update().
 
 class Portfolio(Screen):
     changes = False # Boolean that tells us if the portfolio needs to run the Update function, changing to True if the user bought/sold stock.
     haveStocks = False # To check if it needs to plot a pie chart or not.
+    dpAssign = 0 # Will hold the size needed to make the table fit whatever screen is being displayed in.
     table = None
 
     def __init__(self, **kw):
@@ -29,16 +36,20 @@ class Portfolio(Screen):
             self.PlotPie()
             self.ids.graph.source = "images/piechart.png"
 
+        self.dpAssign = Window.size[0]/22
+
         self.table = MDDataTable(
                         size_hint=(1, 1),
                         pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                         rows_num= 6,
                         background_color_header= (76/255,174/255,81/255,1),
+                        background_color_cell= (1/255,33/255,72/255,1),
+                        background_color_selected_cell= (1/255,33/255,72/255,1),
                         column_data= [
-                            ("Stock", dp(17)),
-                            ("Amount", dp(17)),
-                            ("Total Payed", dp(17)),
-                            ("Total Value", dp(17))
+                            ("Stock", dp(self.dpAssign)),
+                            ("Amount", dp(self.dpAssign)),
+                            ("Total Payed", dp(self.dpAssign)),
+                            ("Total Value", dp(self.dpAssign))
                         ],
                         row_data= [
                             ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
@@ -77,11 +88,13 @@ class Portfolio(Screen):
                             pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                             rows_num= 6,
                             background_color_header= (76/255,174/255,81/255,1),
+                            background_color_cell= (1/255,33/255,72/255,1),
+                            background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
-                                ("Stock", dp(17)),
-                                ("Amount", dp(17)),
-                                ("Total Payed", dp(17)),
-                                ("Total Value", dp(17))
+                                ("Stock", dp(self.dpAssign)),
+                                ("Amount", dp(self.dpAssign)),
+                                ("Total Payed", dp(self.dpAssign)),
+                                ("Total Value", dp(self.dpAssign))
                             ],
                             row_data= [
                                 ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
@@ -109,11 +122,13 @@ class Portfolio(Screen):
                             pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                             rows_num= 6,
                             background_color_header= (76/255,174/255,81/255,1),
+                            background_color_cell= (1/255,33/255,72/255,1),
+                            background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
-                                ("Stock", dp(17)),
-                                ("Amount", dp(17)),
-                                ("Total Payed", dp(17)),
-                                ("Total Value", dp(17))
+                                ("Stock", dp(self.dpAssign)),
+                                ("Amount", dp(self.dpAssign)),
+                                ("Total Payed", dp(self.dpAssign)),
+                                ("Total Value", dp(self.dpAssign))
                             ],
                             row_data= [
                                 ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
@@ -145,15 +160,15 @@ class Portfolio(Screen):
         plt.cla()
         plt.pie(slices, labels=None, wedgeprops={'edgecolor': 'black'}, startangle=90)
         plt.axis('equal')
-        plt.title(f"Total value: {round(sum(slices), 2)}")
+        plt.title(f"Total value: {round(sum(slices), 2)}", color='white')
         plt.legend(loc="center", labels=labs)
         plt.tight_layout
 
         # Donut style:
-        circle = plt.Circle(xy=(0,0), radius=0.75, facecolor= 'white')
+        circle = plt.Circle(xy=(0,0), radius=0.75, facecolor= '#012148d9', alpha=1)
         plt.gca().add_artist(circle)
 
-        plt.savefig("images/piechart.png") # Saves the image so it can be used as a graph.
+        plt.savefig("images/piechart.png", facecolor='#012148d9') # Saves the image so it can be used as a graph.
 
         return
 
