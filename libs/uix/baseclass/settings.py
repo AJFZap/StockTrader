@@ -14,6 +14,9 @@ class Settings(Screen):
         print(button.text)
     
     def WipeDialog(self):
+        """
+        Opens the Wipe saved data dialog.
+        """
         if not self.wipeDialog:
             self.dialog = MDDialog(
                 text="Are you sure you want to wipe all saved data and start over?",
@@ -33,6 +36,9 @@ class Settings(Screen):
         self.dialog.open()
     
     def ExtraConfirmation(self, *args):
+        """
+        Extra step dialog to wipe the saved data just to be sure.
+        """
         self.dialog.dismiss() # Closes the first dialog.
 
         if not self.extraConfirmDialog:

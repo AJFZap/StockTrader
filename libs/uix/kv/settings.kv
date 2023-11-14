@@ -5,87 +5,113 @@
     MDBoxLayout:
         orientation: "vertical"
         size_hint: 1, 1
-        spacing: 15
 
         MDTopAppBar:
             title: "Settings"
             left_action_items: [["arrow-left", lambda x: app.root.set_current('main')]]
-
-        MDGridLayout:
-            size_hint: 1, .75
-            cols: 2
-            fontSize: '15sp'
-            row_default_height: 50
-            row_force_default: True
-            spacing: 50
-
-            ################# THE EMPTY LABELS ARE FOR SPACING PURPOSES ################
-
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
-            
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
-
-            MDLabel:
-                text: "Language Selection:"
-                # font_name: "fonts/Eurostile.ttf"
-                size_hint: 1, 1
-                size: self.texture_size
-                font_size: self.parent.fontSize
-                halign: 'center'
-
-            Spinner:
-                id: language_spinner
-                text: 'English'
-                values: ["English", "Spanish", "Japanese"]
-                # size_hint: .3, .3
-                on_text: root.Selection(self)
-                halign: 'center'
-            
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
-            
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
-            
-            MDLabel:
-                text: "Currency Selection:"
-                # font_name: "fonts/Eurostile.ttf"
-                size_hint: 1, 1
-                size: self.texture_size
-                font_size: self.parent.fontSize
-                halign: 'center'
-            
-            Spinner:
-                id: currency_spinner
-                text: 'USD'
-                values: ["USD", "Euro", "Argentine Peso"]
-                size_hint: 1, 1
-                on_text: root.Selection(self)
-                halign: 'center'
-            
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
-            
-            MDLabel:
-                text: ""
-                size_hint: 1, 1
-                size: self.texture_size
         
-        MDFillRoundFlatButton:
-            text: "Wipe Saved Data"
-            md_bg_color: "gray"
-            size_hint: .5, .1
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            on_press: root.WipeDialog()
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+            padding: 10
+            canvas:
+                Color:
+                    rgba: 0.5, 0.5, 0.5, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                    source: "images/settings.png"
+
+            MDGridLayout:
+                size_hint: 1, .75
+                cols: 2
+                fontSize: '15sp'
+                row_default_height: 50
+                row_force_default: True
+                spacing: 50
+
+                ################# THE EMPTY LABELS ARE FOR SPACING PURPOSES ################
+
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+                
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+
+                MDLabel:
+                    text: "Language Selection:"
+                    # font_name: "fonts/Eurostile.ttf"
+                    size: self.texture_size
+                    font_size: self.parent.fontSize
+                    font_name: 'fonts/SF-Pro-Display-Bold.ttf'
+                    halign: 'center'
+
+                Spinner:
+                    id: language_spinner
+                    text: 'English'
+                    font_name: 'fonts/SF-Pro-Display-Regular.ttf'
+                    values: ["English", "Español", "Japanese"]
+                    on_text: root.Selection(self)
+                    halign: 'center'
+                    color: '#D4D4D9'
+                    background_color: (76/255,174/255,81/255,1)
+                    background_normal: ''
+                    option_cls: 'SpinnerOptions'
+                    sync_height: True
+                
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+                
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+                
+                MDLabel:
+                    text: "Currency Selection:"
+                    # font_name: "fonts/Eurostile.ttf"
+                    size: self.texture_size
+                    font_size: self.parent.fontSize
+                    font_name: 'fonts/SF-Pro-Display-Bold.ttf'
+                    halign: 'center'
+                
+                Spinner:
+                    id: currency_spinner
+                    text: 'USD'
+                    font_name: 'fonts/SF-Pro-Display-Regular.ttf'
+                    values: ["USD", "Euro", "ARS"]
+                    on_text: root.Selection(self)
+                    halign: 'center'
+                    color: '#D4D4D9'
+                    background_color: (76/255,174/255,81/255,1)
+                    background_normal: ''
+                    option_cls: 'SpinnerOptions'
+                    sync_height: True
+                
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+                
+                MDLabel:
+                    text: ""
+                    size: self.texture_size
+            
+            MDFillRoundFlatButton:
+                text: "Wipe Saved Data"
+                text_color: "#D4D4D9"
+                font_name: 'fonts/SF-Pro-Display-Bold.ttf'
+                md_bg_color: '#012148d9'
+                size_hint: .5, .1
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_press: root.WipeDialog()
+
+
+<SpinnerOptions@Button>
+    color: '#D4D4D9'
+    background_color: '#012148d9'#[76/255,174/255,81/255,1]
+    background_normal: ''    # You can put the name of a file to use as a button image...
+    font_name: 'fonts/SF-Pro-Display-BlackItalic.ttf'
+    size_hint_y: None
+    size_y: '1dp'
