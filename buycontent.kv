@@ -8,16 +8,21 @@
     size_hint_y: None
     height: "230dp"
     stockName: app.cont
+    fontName: 'fonts/SF-Pro-Display-Regular.ttf'
+
     MDLabel:
         text: f"Cash on Hand: ${round(app.root.get_screen('main').userMoney, 2)}"
+        font_name: root.fontName
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
     MDLabel:
         text: f"Current Stock Price: ${round(app.currentStockPrice[self.parent.stockName], 2)}"
+        font_name: root.fontName
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
     
     MDLabel:
         text: f"Owned Stocks: {app.ownedStocks[self.parent.stockName]}"
+        font_name: root.fontName
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
     MDSlider:
@@ -40,6 +45,7 @@
 
         MDTextField:
             id: text_input
+            font_name: root.fontName
             hint_text: "Amount to buy"
             helper_text: "How many do you want?"
             helper_text_mode: "on_focus"

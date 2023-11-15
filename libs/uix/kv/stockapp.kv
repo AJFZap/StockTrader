@@ -8,12 +8,15 @@
     MDBottomNavigation:
         id: bottom_nav
         selected_color_background: None
+        text_color_active: "lightgreen"
         panel_color: "green"
         imageSource: 'images/stocksBG-1.png'
+        fontTitle: 'fonts/SF-Pro-Display-Bold.ttf'
+        fontName: 'fonts/SF-Pro-Display-Regular.ttf'
 
         MDBottomNavigationItem:
             name: 'screen 1'
-            text: 'Guide'
+            text: 'General'
             icon: 'compass'
             MDScreen:
                 MDBoxLayout:
@@ -32,33 +35,41 @@
 
                     MDLabel:
                         text: "Current Rank:"
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontTitle
                         halign: 'center'
                         font_size: '40sp'
-                        size_hint: 1, .2
-                        pos_hint:{'center_y': 0.9}
+                        outline_width: 2
+                        outline_colour: (0, 0, 0, 1)
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        size_hint: 1, .3
+                        pos_hint:{'center_y': 1}
                     
                     MDLabel:
                         id: rank
                         text: ""
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontName
                         halign: 'center'
                         font_size: '30sp'
-                        size_hint: 1, .1
-                        pos_hint:{'center_y': 0.9}
+                        outline_width: 2
+                        outline_colour: (0, 0, 0, 1)
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        size_hint: 1, .5
+                        pos_hint:{'center_y': 1}
                     
-                    MDRoundFlatButton:
+                    MDFillRoundFlatButton:
                         text: "Settings"
                         font_size: self.parent.fontSize
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontName
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
                         on_press: app.root.set_current('settings')
                     
-                    MDRoundFlatButton:
+                    MDFillRoundFlatButton:
                         text: "Investing Guide"
                         font_size: self.parent.fontSize
-                        # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
+                        font_name: bottom_nav.fontName
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
                         on_press: print("Not implemented yet")
@@ -86,465 +97,473 @@
                     do_scroll_y: True
                     effect_cls: 'ScrollEffect'
 
-                    MDGridLayout:
-                        cols: 2
-                        padding: 40
-                        spacing: 20
+                    MDBoxLayout:
+                        orientation: 'vertical'
                         size_hint: 1, None
                         height: self.minimum_height
-                        row_default_height: 400
-                        row_force_default: True
-                        fontSize: '25sp'
-                        
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "AAPL"
-                            screenGraph: "first"
-                            posDF: app.randomRow # This holds the value of the position in the Data Frame, to be able to update the value.
 
-                            MDLabel:
-                                id: ticker_o
-                                text: self.parent.name
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_open_o
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_price_o
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_diff_o
-                                text: app.GetPrice(self)
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
-                            
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
+                        MDLabel:
+                            text: f"Cash: {round(app.userMoney, 2)}"
+                            font_name: bottom_nav.fontTitle
+                            size_hint_y: None
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            font_size: '30sp'
+                            halign: 'center'
 
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.SellStock(self.parent.name)
+                        MDGridLayout:
+                            cols: 2
+                            padding: 20
+                            spacing: 20
+                            size_hint: 1, None
+                            height: self.minimum_height
+                            row_default_height: 400
+                            row_force_default: True
+                            fontSize: '20sp'
+                            
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "AAPL"
+                                screenGraph: "first"
+                                posDF: app.randomRow # This holds the value of the position in the Data Frame, to be able to update the value.
 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
-                            
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "TSLA"
-                            screenGraph: "second"
-                            posDF: app.randomRow
-
-                            MDLabel:
-                                id: ticker_t
-                                text: self.parent.name
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_open_t
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_price_t
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_diff_t
-                                text: app.GetPrice(self)
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
-
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
-                            
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.SellStock(self.parent.name)
+                                MDLabel:
+                                    id: ticker_o
+                                    text: self.parent.name
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
                                 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
-                        
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "GOOGL"
-                            screenGraph: "third"
-                            posDF: app.randomRow
-
-                            MDLabel:
-                                id: ticker_th
-                                text: self.parent.name
-                                # font_name: ""
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_open_th
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-
-                            MDLabel:
-                                id: stock_price_th
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_diff_th
-                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
-
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
-                            
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.SellStock(self.parent.name)
+                                MDLabel:
+                                    id: stock_open_o
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
                                 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
-
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "AMZN"
-                            screenGraph: "fourth"
-                            posDF: app.randomRow
-
-                            MDLabel:
-                                id: ticker_fo
-                                text: self.parent.name
-                                # font_name: ""
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_open_fo
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-
-                            MDLabel:
-                                id: stock_price_fo
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_diff_fo
-                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
-
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
-                            
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.SellStock(self.parent.name)
+                                MDLabel:
+                                    id: stock_price_o
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
                                 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
-
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "^GSPC"
-                            screenGraph: "fifth"
-                            posDF: app.randomRow
-
-                            MDLabel:
-                                id: ticker_fi
-                                text: self.parent.name
-                                # font_name: ""
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_open_fi
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-
-                            MDLabel:
-                                id: stock_price_fi
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                            
-                            MDLabel:
-                                id: stock_diff_fi
-                                text: app.GetPrice(self)#app.GetDifference(self.parent.name, app.GetPrice(self.parent.name))
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
-
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
-                            
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.sellStock(self.parent.name)
+                                MDLabel:
+                                    id: stock_diff_o
+                                    text: app.GetPrice(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
                                 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
 
-                        MDCard:
-                            orientation: 'vertical'
-                            style: "outlined"
-                            md_bg_color: (1/255,33/255,72/255,1)
-                            radius: [dp(20), dp(20), dp(20), dp(20)]
-                            padding: 10
-                            spacing: 10
-                            name: "^IXIC"
-                            screenGraph: "sixth"
-                            posDF: app.randomRow
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.SellStock(self.parent.name)
 
-                            MDLabel:
-                                id: ticker_six
-                                text: self.parent.name
-                                # font_name: ""
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
+                                
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "TSLA"
+                                screenGraph: "second"
+                                posDF: app.randomRow
 
-                            MDLabel:
-                                id: stock_open_six
-                                text: f"Open: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
+                                MDLabel:
+                                    id: ticker_t
+                                    text: self.parent.name
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_open_t
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_price_t
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_diff_t
+                                    text: app.GetPrice(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
 
-                            MDLabel:
-                                id: stock_price_six
-                                text: f"Price: {app.openPrice[self.parent.name]}"
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
+                                
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.SellStock(self.parent.name)
+                                    
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
+                            
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "GOOGL"
+                                screenGraph: "third"
+                                posDF: app.randomRow
 
-                            MDLabel:
-                                id: stock_diff_six
-                                text: app.GetDifference(self)
-                                # font_name: "fonts/Sackers-Gothic-Std-Light.ttf"
-                                size_hint: 1, None
-                                size: self.texture_size
-                                font_size: self.parent.parent.fontSize
-                                halign: 'center'
-                                markup: True
+                                MDLabel:
+                                    id: ticker_th
+                                    text: self.parent.name
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    size: self.texture_size
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_open_th
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
 
-                            MDRectangleFlatButton:
-                                text: "Buy Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.BuyStock(self.parent.name)
+                                MDLabel:
+                                    id: stock_price_th
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_diff_th
+                                    text: app.GetPrice(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
 
-                            MDRectangleFlatButton:
-                                text: "Sell Stock"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_release: app.SellStock(self.parent.name)
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
+                                
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.SellStock(self.parent.name)
+                                    
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
 
-                            MDRectangleFlatButton:
-                                text: "See Graphic"
-                                theme_text_color: "Custom"
-                                text_color: "green"
-                                line_color: "green"
-                                pos_hint: {'center_x': 0.5}
-                                size_hint: 0.8, None
-                                on_press: app.ToGraph(self)
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "AMZN"
+                                screenGraph: "fourth"
+                                posDF: app.randomRow
+
+                                MDLabel:
+                                    id: ticker_fo
+                                    text: self.parent.name
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_open_fo
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+
+                                MDLabel:
+                                    id: stock_price_fo
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_diff_fo
+                                    text: app.GetPrice(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
+
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
+                                
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.SellStock(self.parent.name)
+                                    
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
+
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "^GSPC"
+                                screenGraph: "fifth"
+                                posDF: app.randomRow
+
+                                MDLabel:
+                                    id: ticker_fi
+                                    text: self.parent.name
+                                    # font_name: ""
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_open_fi
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+
+                                MDLabel:
+                                    id: stock_price_fi
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                
+                                MDLabel:
+                                    id: stock_diff_fi
+                                    text: app.GetPrice(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
+
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
+                                
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.sellStock(self.parent.name)
+                                    
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
+
+                            MDCard:
+                                orientation: 'vertical'
+                                style: "outlined"
+                                md_bg_color: (1/255,33/255,72/255,1)
+                                radius: [dp(20), dp(20), dp(20), dp(20)]
+                                padding: 10
+                                spacing: 10
+                                name: "^IXIC"
+                                screenGraph: "sixth"
+                                posDF: app.randomRow
+
+                                MDLabel:
+                                    id: ticker_six
+                                    text: self.parent.name
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+
+                                MDLabel:
+                                    id: stock_open_six
+                                    text: f"Open: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+
+                                MDLabel:
+                                    id: stock_price_six
+                                    text: f"Price: {app.openPrice[self.parent.name]}"
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+
+                                MDLabel:
+                                    id: stock_diff_six
+                                    text: app.GetDifference(self)
+                                    font_name: bottom_nav.fontName
+                                    size_hint: 1, 1
+                                    font_size: self.parent.parent.fontSize
+                                    halign: 'center'
+                                    markup: True
+
+                                MDRectangleFlatButton:
+                                    text: "Buy Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.BuyStock(self.parent.name)
+
+                                MDRectangleFlatButton:
+                                    text: "Sell Stock"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_release: app.SellStock(self.parent.name)
+
+                                MDRectangleFlatButton:
+                                    text: "See Graphic"
+                                    font_name: bottom_nav.fontName
+                                    theme_text_color: "Custom"
+                                    text_color: "green"
+                                    line_color: "green"
+                                    pos_hint: {'center_x': 0.5}
+                                    size_hint: 0.8, None
+                                    on_press: app.ToGraph(self)
 
         MDBottomNavigationItem:
             name: 'screen 3'
@@ -567,9 +586,13 @@
 
                     MDLabel:
                         text: "Recent Trades: "
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontTitle
                         halign: 'center'
                         font_size: self.parent.fontSize
+                        outline_width: 2
+                        outline_colour: (0, 0, 0, 1)
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
                         size_hint: 1, .4
                         pos_hint:{'center_y': 0.9}
                     
@@ -590,26 +613,32 @@
 
                             MDLabel:
                                 text: "No recent trades to show."
+                                font_name: bottom_nav.fontName
+                                outline_width: 1
+                                outline_colour: (0, 0, 0, 1)
+                                theme_text_color: "Custom"
+                                text_color: "#D4D4D9"
                                 font_size: 20
                     
-                    MDRoundFlatButton:
+                    MDRectangleFlatButton:
                         text: "Portfolio"
                         font_size: self.parent.fontSize
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontName
                         size_hint: .8, .2
                         pos_hint: {'center_x': 0.5}
                         on_press: app.ToGraph(self)
                     
-                    MDRoundFlatButton:
+                    MDRectangleFlatButton:
                         text: "Trade History"
                         font_size: self.parent.fontSize
-                        # font_name: "fonts/Eurostile.ttf"
+                        font_name: bottom_nav.fontName
                         size_hint: .8, .2
                         pos_hint: {'center_x': 0.5}
                         on_press: app.History()
 
 ## Things needed for the graphics on the stock screens. If each one has this declarations then it will raise a warning, so better have them here.
 <DrawerLabelItem@MDNavigationDrawerItem>
+    font_name: 'fonts/SF-Pro-Display-Regular.ttf'
     text_color: "#D4D4D9"
     icon_color: "#D4D4D9"
     focus_behavior: False
@@ -619,6 +648,7 @@
 <RoundedButton@Button>
     background_color: (0,0,0,0)
     background_normal: ''
+    font_name: 'fonts/SF-Pro-Display-Regular.ttf'
     canvas.before:
         Color:
             rgba: (76/255,174/255,81/255,1)

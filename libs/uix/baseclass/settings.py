@@ -20,6 +20,7 @@ class Settings(Screen):
         if not self.wipeDialog:
             self.dialog = MDDialog(
                 text="Are you sure you want to wipe all saved data and start over?",
+                md_bg_color=(1/255,33/255,72/255,1),
                 buttons=[
                     MDRaisedButton(
                         text="Wipe",
@@ -44,6 +45,7 @@ class Settings(Screen):
         if not self.extraConfirmDialog:
             self.dialog = MDDialog(
                 text="ARE YOU ABSOLUTELY CERTAIN THAT YOU WANT THIS?",
+                md_bg_color=(1/255,33/255,72/255,1),
                 buttons=[
                     MDRaisedButton(
                         text="Yes, wipe my data",

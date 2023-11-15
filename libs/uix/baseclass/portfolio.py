@@ -46,18 +46,18 @@ class Portfolio(Screen):
                         background_color_cell= (1/255,33/255,72/255,1),
                         background_color_selected_cell= (1/255,33/255,72/255,1),
                         column_data= [
-                            ("Stock", dp(self.dpAssign)),
-                            ("Amount", dp(self.dpAssign)),
-                            ("Total Payed", dp(self.dpAssign)),
-                            ("Total Value", dp(self.dpAssign))
+                            ("[color=#D4D4D9]Stock[/color]", dp(self.dpAssign)),
+                            ("[color=#D4D4D9]Amount[/color]", dp(self.dpAssign)),
+                            ("[color=#D4D4D9]Total Payed[/color]", dp(self.dpAssign)),
+                            ("[color=#D4D4D9]Total Value[/color]", dp(self.dpAssign))
                         ],
                         row_data= [
-                            ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
-                            ("TSLA",thing.ownedStocks["TSLA"],thing.spentOnStocks["TSLA"],round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)),
-                            ("GOOGL",thing.ownedStocks["GOOGL"],thing.spentOnStocks["GOOGL"],round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)),
-                            ("AMZN",thing.ownedStocks["AMZN"],thing.spentOnStocks["AMZN"],round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)),
-                            ("^GSPC",thing.ownedStocks["^GSPC"],thing.spentOnStocks["^GSPC"],round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)),
-                            ("^IXIC",thing.ownedStocks["^IXIC"],thing.spentOnStocks["^IXIC"],round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2))
+                            ("[color=#D4D4D9]AAPL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)}[/color]'),
+                            ("[color=#D4D4D9]TSLA[/color]",f'[color=#D4D4D9]{thing.ownedStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)}[/color]'),
+                            ("[color=#D4D4D9]GOOGL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)}[/color]'),
+                            ("[color=#D4D4D9]AMZN[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)}[/color]'),
+                            ("[color=#D4D4D9]^GSPC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)}[/color]'),
+                            ("[color=#D4D4D9]^IXIC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2)}[/color]')
                         ] 
                     )
         self.ids.table.add_widget(self.table)
@@ -91,18 +91,18 @@ class Portfolio(Screen):
                             background_color_cell= (1/255,33/255,72/255,1),
                             background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
-                                ("Stock", dp(self.dpAssign)),
-                                ("Amount", dp(self.dpAssign)),
-                                ("Total Payed", dp(self.dpAssign)),
-                                ("Total Value", dp(self.dpAssign))
+                                ("[color=#D4D4D9]Stock[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Amount[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Total Payed[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Total Value[/color]", dp(self.dpAssign))
                             ],
                             row_data= [
-                                ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
-                                ("TSLA",thing.ownedStocks["TSLA"],thing.spentOnStocks["TSLA"],round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)),
-                                ("GOOGL",thing.ownedStocks["GOOGL"],thing.spentOnStocks["GOOGL"],round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)),
-                                ("AMZN",thing.ownedStocks["AMZN"],thing.spentOnStocks["AMZN"],round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)),
-                                ("^GSPC",thing.ownedStocks["^GSPC"],thing.spentOnStocks["^GSPC"],round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)),
-                                ("^IXIC",thing.ownedStocks["^IXIC"],thing.spentOnStocks["^IXIC"],round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2))
+                                ("[color=#D4D4D9]AAPL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)}[/color]'),
+                                ("[color=#D4D4D9]TSLA[/color]",f'[color=#D4D4D9]{thing.ownedStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)}[/color]'),
+                                ("[color=#D4D4D9]GOOGL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)}[/color]'),
+                                ("[color=#D4D4D9]AMZN[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)}[/color]'),
+                                ("[color=#D4D4D9]^GSPC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)}[/color]'),
+                                ("[color=#D4D4D9]^IXIC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2)}[/color]')
                             ] 
                         )
             self.ids.table.add_widget(self.table)
@@ -125,18 +125,18 @@ class Portfolio(Screen):
                             background_color_cell= (1/255,33/255,72/255,1),
                             background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
-                                ("Stock", dp(self.dpAssign)),
-                                ("Amount", dp(self.dpAssign)),
-                                ("Total Payed", dp(self.dpAssign)),
-                                ("Total Value", dp(self.dpAssign))
+                                ("[color=#D4D4D9]Stock[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Amount[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Total Payed[/color]", dp(self.dpAssign)),
+                                ("[color=#D4D4D9]Total Value[/color]", dp(self.dpAssign))
                             ],
                             row_data= [
-                                ("AAPL",thing.ownedStocks["AAPL"],thing.spentOnStocks["AAPL"],round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)),
-                                ("TSLA",thing.ownedStocks["TSLA"],thing.spentOnStocks["TSLA"],round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)),
-                                ("GOOGL",thing.ownedStocks["GOOGL"],thing.spentOnStocks["GOOGL"],round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)),
-                                ("AMZN",thing.ownedStocks["AMZN"],thing.spentOnStocks["AMZN"],round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)),
-                                ("^GSPC",thing.ownedStocks["^GSPC"],thing.spentOnStocks["^GSPC"],round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)),
-                                ("^IXIC",thing.ownedStocks["^IXIC"],thing.spentOnStocks["^IXIC"],round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2))
+                                ("[color=#D4D4D9]AAPL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AAPL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AAPL"] * thing.currentStockPrice["AAPL"], 2)}[/color]'),
+                                ("[color=#D4D4D9]TSLA[/color]",f'[color=#D4D4D9]{thing.ownedStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["TSLA"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["TSLA"] * thing.currentStockPrice["TSLA"], 2)}[/color]'),
+                                ("[color=#D4D4D9]GOOGL[/color]",f'[color=#D4D4D9]{thing.ownedStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["GOOGL"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["GOOGL"] * thing.currentStockPrice["GOOGL"], 2)}[/color]'),
+                                ("[color=#D4D4D9]AMZN[/color]",f'[color=#D4D4D9]{thing.ownedStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["AMZN"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["AMZN"] * thing.currentStockPrice["AMZN"], 2)}[/color]'),
+                                ("[color=#D4D4D9]^GSPC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^GSPC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^GSPC"] * thing.currentStockPrice["^GSPC"], 2)}[/color]'),
+                                ("[color=#D4D4D9]^IXIC[/color]",f'[color=#D4D4D9]{thing.ownedStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{thing.spentOnStocks["^IXIC"]}[/color]',f'[color=#D4D4D9]{round(thing.ownedStocks["^IXIC"] * thing.currentStockPrice["^IXIC"], 2)}[/color]')
                             ] 
                         )
             

@@ -14,8 +14,6 @@ from kivy.app import App
 import pandas as pd
 import datetime
 
-# TODO Fix the critical Error with the MDCards, probably has to do with using root.size on the buttons and such.
-# TODO When the Rank changes also change the background, each rank has a distinct design.
 # TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
 
@@ -39,7 +37,7 @@ class StockApp(MDApp):
     spentOnStocks = {"AAPL": 0.00, "TSLA": 0.00, "GOOGL": 0.00, "AMZN": 0.00, "^GSPC": 0.00, "^IXIC": 0.00}
     cont = '' # Holds the name of the stock the Dialog Content will display.
     stockHistory= [] # Holds all the transactions made by the user.
-    userMoney = NumericProperty(100000.00)
+    userMoney = NumericProperty(11000.00)
     
     dialogBuy = None
     dialogSell = None
@@ -82,22 +80,31 @@ class StockApp(MDApp):
         
         if TotalValue < 10000:
             RankAlias.text = "Deadbeat"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/deadbeat.png'
         elif TotalValue == 10000:
             RankAlias.text = "Newcomer"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/newcomer.png'
         elif TotalValue > 10000 and TotalValue < 25000:
             RankAlias.text = "Apprentice"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/apprentice.png'
         elif TotalValue >= 25000 and TotalValue < 50000:
             RankAlias.text = "Money Wise"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/moneywise.png'
         elif TotalValue >= 50000 and TotalValue < 100000:
             RankAlias.text = "Prodigy"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/prodigy.png'
         elif TotalValue >= 100000 and TotalValue < 250000:
             RankAlias.text = "Market Guru"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/marketguru.png'
         elif TotalValue >= 250000 and TotalValue < 500000:
             RankAlias.text = "Smart Investor"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/smartinvestor.png'
         elif TotalValue >= 500000 and TotalValue < 1000000:
             RankAlias.text = "Genius Investor"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/geniusinvestor.png'
         else:
             RankAlias.text = "Warren Buffett's Advisor"
+            self.root.get_screen("main").ids.bottom_nav.imageSource = 'images/warrenbuffetsadvisor.png'
     
     def ToGraph(self, button):
         """
@@ -213,12 +220,14 @@ class StockApp(MDApp):
                 buttons=[
                     MDFlatButton(
                         text="Buy",
+                        font_name='fonts/SF-Pro-Display-Regular.ttf',
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
                         on_release= self.Buy,
                     ),
                     MDFlatButton(
                         text="Cancel",
+                        font_name='fonts/SF-Pro-Display-Regular.ttf',
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
                         on_release=self.CloseDialog,
@@ -245,12 +254,14 @@ class StockApp(MDApp):
                 buttons=[
                     MDFlatButton(
                         text="Sell",
+                        font_name='fonts/SF-Pro-Display-Regular.ttf',
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
                         on_release=self.Sell,
                     ),
                     MDFlatButton(
                         text="Cancel",
+                        font_name='fonts/SF-Pro-Display-Regular.ttf',
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
                         on_release=self.CloseDialog,
@@ -308,7 +319,11 @@ class StockApp(MDApp):
 
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
-        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
+        
+        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}",
+                         font_name='fonts/SF-Pro-Display-Regular.ttf', font_size= self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize,
+                         outline_width= 1, outline_colour= (0, 0, 0, 1))
+        
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
         self.stockHistory.append(f"· {day.date()} {day.time().hour}:{day.strftime('%M')} -- Bought: {int(aka.ids.text_input.text)} of {aka.stockName}")
@@ -353,7 +368,11 @@ class StockApp(MDApp):
 
         if len(recentTradesLabels) > 10:
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[-1]) 
-        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}", font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize)
+        
+        recent = MDLabel(text=f"· {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}",
+                         font_name='fonts/SF-Pro-Display-Regular.ttf', font_size=  self.root.get_screen("main").ids['recent_trades'].parent.parent.fontSize,
+                         outline_width= 1, outline_colour= (0, 0, 0, 1))
+        
         self.root.get_screen("main").ids['recent_trades'].add_widget(recent)
 
         self.stockHistory.append(f"· {day.date()} {day.time().hour}:{day.strftime('%M')} -- Sold: {int(aka.ids.text_input.text)} of {aka.stockName}")
@@ -382,6 +401,7 @@ class StockApp(MDApp):
                 buttons=[
                     MDFlatButton(
                         text="Close",
+                        font_name='fonts/SF-Pro-Display-Regular.ttf',
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
                         on_release=self.CloseDialog,
@@ -476,7 +496,7 @@ class HistoryContent(MDBoxLayout):
         super().__init__(*args, **kwargs)
 
         for label in App.get_running_app().stockHistory:
-            newLabel = MDLabel(text=label, font_size=  self.ids.all_trades.fontSize)
+            newLabel = MDLabel(text=label, font_name='fonts/SF-Pro-Display-Regular.ttf',font_size=  self.ids.all_trades.fontSize)
             self.ids.all_trades.add_widget(newLabel)
 
 if __name__ == "__main__":
