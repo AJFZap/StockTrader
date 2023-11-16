@@ -16,8 +16,12 @@ import datetime
 import json
 import os
 
-# TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
+
+### Improvements that could work: 
+# -1) New Data table column with the payed for each stock showing the median paid.
+# -2) On the "Sell" show how much did you paid for that stock and maybe show the current stock price with either green or red 
+#     depending if it's higher or lower than the paid amount.
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -39,7 +43,7 @@ class StockApp(MDApp):
     spentOnStocks = {"AAPL": 0.00, "TSLA": 0.00, "GOOGL": 0.00, "AMZN": 0.00, "^GSPC": 0.00, "^IXIC": 0.00}
     cont = '' # Holds the name of the stock the Dialog Content will display.
     stockHistory= [] # Holds all the transactions made by the user.
-    userMoney = NumericProperty(11000.00)
+    userMoney = NumericProperty(10000.00)
     
     dialogBuy = None
     dialogSell = None

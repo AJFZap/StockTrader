@@ -3,7 +3,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.toast import toast
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
-import os
+import os, sys
 
 class Settings(Screen):
     wipeDialog = None
@@ -46,7 +46,7 @@ class Settings(Screen):
 
         if not self.extraConfirmDialog:
             self.dialog = MDDialog(
-                text="ARE YOU ABSOLUTELY CERTAIN THAT YOU WANT THIS?",
+                text="ARE YOU ABSOLUTELY CERTAIN THAT YOU WANT THIS? (The app will close too.)",
                 md_bg_color=(1/255,33/255,72/255,1),
                 buttons=[
                     MDRaisedButton(
@@ -75,8 +75,8 @@ class Settings(Screen):
         """
         if os.path.exists("./Save_Data/user_data.json"):
             os.remove("./Save_Data/user_data.json")
-            self.dialog.dismiss()
             App.get_running_app().stop()
+
         else:
-            toast("There is no saved data to wipe.")
             self.dialog.dismiss()
+            toast("There is no saved data to wipe.")
