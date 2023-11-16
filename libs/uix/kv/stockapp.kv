@@ -58,18 +58,26 @@
                         size_hint: 1, .5
                         pos_hint:{'center_y': 1}
                     
-                    MDFillRoundFlatButton:
+                    MDRectangleFlatButton:
                         text: "Settings"
                         font_size: self.parent.fontSize
                         font_name: bottom_nav.fontName
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        line_color: '#008000'
+                        md_bg_color: '#008000'
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
                         on_press: app.root.set_current('settings')
                     
-                    MDFillRoundFlatButton:
+                    MDRectangleFlatButton:
                         text: "Investing Guide"
                         font_size: self.parent.fontSize
                         font_name: bottom_nav.fontName
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        line_color: '#008000'
+                        md_bg_color: '#008000'
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
                         on_press: print("Not implemented yet")
@@ -624,6 +632,10 @@
                         text: "Portfolio"
                         font_size: self.parent.fontSize
                         font_name: bottom_nav.fontName
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        line_color: '#008000'
+                        md_bg_color: '#008000'
                         size_hint: .8, .2
                         pos_hint: {'center_x': 0.5}
                         on_press: app.ToGraph(self)
@@ -632,6 +644,10 @@
                         text: "Trade History"
                         font_size: self.parent.fontSize
                         font_name: bottom_nav.fontName
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        line_color: '#008000'
+                        md_bg_color: '#008000'
                         size_hint: .8, .2
                         pos_hint: {'center_x': 0.5}
                         on_press: app.History()

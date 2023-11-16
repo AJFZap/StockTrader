@@ -1,7 +1,9 @@
 from kivy.app import App
 from kivymd.uix.dialog import MDDialog
+from kivymd.toast import toast
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
+import os
 
 class Settings(Screen):
     wipeDialog = None
@@ -71,4 +73,10 @@ class Settings(Screen):
         """
         When clicked it will clear all the saved data from the user, so they can start over if they want.
         """
-        self.dialog.dismiss()
+        if os.path.exists("./Save_Data/user_data.json"):
+            os.remove("./Save_Data/user_data.json")
+            self.dialog.dismiss()
+            App.get_running_app().stop()
+        else:
+            toast("There is no saved data to wipe.")
+            self.dialog.dismiss()

@@ -13,6 +13,8 @@ from kivymd.uix.label import MDLabel
 from kivy.app import App
 import pandas as pd
 import datetime
+import json
+import os
 
 # TODO Implement a save feature.
 # TODO Implement the "Investing Guide"
@@ -62,10 +64,41 @@ class StockApp(MDApp):
         self.root.set_current("main")
 
     def on_start(self):
+        if os.path.exists("./Save_Data/user_data.json"):
+            self.LoadProgress()
+
         self.CheckRank()
         Clock.schedule_interval(self.updateStocks, 2)
         Clock.schedule_interval(self.CheckRank, 5)
         # print(self.root.get_screen("main").ids)
+    
+    def SaveProgress(self):
+        """
+        Saves the progress of the user by saving the amount of stocks from each company that they have and their cash on hand.
+        """
+        if os.path.exists("./Save_Data/user_data.json"):
+            f = open("./Save_Data/user_data.json", "w")
+        else:
+            f = open("./Save_Data/user_data.json", "x")
+        
+        jsonDict = {"money": round(self.userMoney, 2), "stocks": self.ownedStocks, "spent": self.spentOnStocks, "history": self.stockHistory}
+
+        f.write(json.dumps(jsonDict))
+        f.close()
+    
+    def LoadProgress(self):
+        """
+        If the user has saved data then it will load it.
+        """
+        with open("./Save_Data/user_data.json", 'r') as json_file:
+            data = json.loads(json_file.read())
+
+            self.userMoney = data['money']
+            self.ownedStocks = data['stocks']
+            self.spentOnStocks = data['spent']
+            self.stockHistory = data['history']
+        
+        return
     
     def CheckRank(self, *args):
         """
@@ -331,6 +364,9 @@ class StockApp(MDApp):
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:
             self.root.get_screen("portfolio").changes = True
+        
+        ### Save transaction
+        self.SaveProgress()
 
         self.dialog.dismiss()
 
@@ -380,6 +416,9 @@ class StockApp(MDApp):
         ### Portolio screen changes (update values and graph.)
         if self.currentScreens['portfolio']:
             self.root.get_screen("portfolio").changes = True
+        
+        ### Save transaction
+        self.SaveProgress()
         
         self.dialog.dismiss()
     
