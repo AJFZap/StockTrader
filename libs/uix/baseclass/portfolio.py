@@ -76,7 +76,7 @@ class Portfolio(Screen):
     def Update(self):
         """
         When called the pie chart and the values of the stocks in the grid are updated IF self.changes is True.
-        This function is called each time the portfolio screen selected.
+        This function is called each time the portfolio screen is selected.
         """
         self.CheckStocks() # Checks if the user has stocks remaining.
         

@@ -36,6 +36,10 @@ class SecondStock(Screen):
     isActive = True
     
     def __init__(self, **kw):
+        """
+        Indicates to the App that the screen has been created and exists 
+        then it plots the graph and schedules its constant update.
+        """
         super().__init__(**kw)
         thing.currentScreens[self.ids.nav_drawer.name] = True
         self.ids.graph.add_widget(FigureCanvasKivyAgg(plt.gcf()))

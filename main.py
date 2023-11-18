@@ -253,7 +253,7 @@ class StockApp(MDApp):
     
     def BuyStock(self, stockName):
         """
-        Stops the stocks and the graphs from updating while the Buy Dialog is open.
+        Stops the stocks and graphs from updating while the Buy Dialog is open.
         Then it opens a Buy Dialog with the BuyContent class.
         """
         self.cont = stockName # To know wich Dialog Content Stock to Open.
@@ -265,7 +265,7 @@ class StockApp(MDApp):
 
         if not self.dialogBuy:
             self.dialog = MDDialog(
-                title=f"Buy Stocks - {stockName}",
+                title=f"Buy Stocks - {stockName}", # To change the pos to the center go to kivymd/uix/dialog.kv--> id:title -->halign: "center"
                 md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type="custom",
@@ -291,7 +291,7 @@ class StockApp(MDApp):
 
     def SellStock(self, stockName):
         """
-        Stops the stocks and the graphs from updating while the Sell Dialog is open.
+        Stops the stocks and graphs from updating while the Sell Dialog is open.
         Then it opens a Sell Dialog with the SellContent class.
         """
         self.cont = stockName # To know wich Dialog Content Stock to Open.

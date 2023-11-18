@@ -3,7 +3,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.toast import toast
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
-import os, sys
+import os
 
 class Settings(Screen):
     wipeDialog = None
@@ -11,7 +11,7 @@ class Settings(Screen):
     
     def Selection(self, button):
         """
-        It will change the currence and the language of the app depending on wich spinner was changed.
+        It will change the currency and the language of the app depending on wich spinner was changed.
         """
         print(button.text)
     
