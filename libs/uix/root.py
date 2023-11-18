@@ -4,7 +4,7 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import ListProperty
 from kivy.uix.screenmanager import ScreenManager
-from kivy.uix.screenmanager import FadeTransition
+from kivy.uix.screenmanager import RiseInTransition
 from libs.applibs import utils
 
 
@@ -55,7 +55,7 @@ class Root(ScreenManager):
             self.add_widget(screen_object)
 
         # sets transition effects
-        self.transition = FadeTransition()
+        self.transition = RiseInTransition()
         
         # sets to the current screen
         self.current = screen_name

@@ -16,7 +16,7 @@ import datetime
 import json
 import os
 
-# TODO Implement the "Investing Guide"
+# TODO Minor bug: Sometimes the plots in graphs are created zoomed, I don't know why.
 
 ### Improvements that could work: 
 # -1) New Data table column with the payed for each stock showing the median paid.
@@ -68,13 +68,25 @@ class StockApp(MDApp):
         self.root.set_current("main")
 
     def on_start(self):
+        """
+        On start it checks if there is a saved game, if there is then it loads the progress
+        and switches the screen to the market.
+        Then checks the rank of the user and schedules the updating of the stocks and the rank checking.
+        """
         if os.path.exists("./Save_Data/user_data.json"):
             self.LoadProgress()
+            Clock.schedule_once(self.Switch, 3)
 
         self.CheckRank()
         Clock.schedule_interval(self.updateStocks, 2)
         Clock.schedule_interval(self.CheckRank, 5)
         # print(self.root.get_screen("main").ids)
+    
+    def Switch(self, *args):
+        """
+        Switches the screen to the Market one.
+        """
+        self.root.get_screen("main").ids.bottom_nav.switch_tab('screen 2')
     
     def SaveProgress(self):
         """
@@ -240,6 +252,10 @@ class StockApp(MDApp):
         cards.ids.stock_diff_six.text = self.GetDifference(cards.ids.stock_price_six)
     
     def BuyStock(self, stockName):
+        """
+        Stops the stocks and the graphs from updating while the Buy Dialog is open.
+        Then it opens a Buy Dialog with the BuyContent class.
+        """
         self.cont = stockName # To know wich Dialog Content Stock to Open.
 
         Clock.unschedule(self.updateStocks) # To stay at the price of the stock when clicked.
@@ -249,7 +265,7 @@ class StockApp(MDApp):
 
         if not self.dialogBuy:
             self.dialog = MDDialog(
-                title="Buy Stocks",
+                title=f"Buy Stocks - {stockName}",
                 md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type="custom",
@@ -274,6 +290,10 @@ class StockApp(MDApp):
         self.dialog.open()
 
     def SellStock(self, stockName):
+        """
+        Stops the stocks and the graphs from updating while the Sell Dialog is open.
+        Then it opens a Sell Dialog with the SellContent class.
+        """
         self.cont = stockName # To know wich Dialog Content Stock to Open.
 
         Clock.unschedule(self.updateStocks) # To stay at the price of the stock when clicked.
@@ -283,7 +303,7 @@ class StockApp(MDApp):
 
         if not self.dialogSell:
             self.dialog = MDDialog(
-                title="Sell Stocks",
+                title=f"Sell Stocks - {stockName}",
                 md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type= "custom",
@@ -309,7 +329,7 @@ class StockApp(MDApp):
 
     def RunClock(self, *args):
         """
-        When the buy or Sell dialogs is dismissed starts updating the stock values again.
+        When the buy or sell dialogs is dismissed starts updating the stock values again.
         """
         Clock.schedule_interval(self.updateStocks, 2) # Start updating the stock prices again.
         for key in self.currentScreens: # Starts updating the graphs of the required screens again.
@@ -318,13 +338,15 @@ class StockApp(MDApp):
 
     def CloseDialog(self, *args):
         """
-        Close the Buy and Sell dialogs.
+        Closes the Buy and Sell dialogs.
         """
         self.dialog.dismiss()
 
     def Buy(self, *args):
         """
-        It updates the amount of money the user has in hand and the amount of stocks from the company the user has.
+        It updates the amount of money and stocks the user has. Then it updates the amount of money the user spent on stocks,
+        prepares the graphs and portfolio to update, updates the recent trades and stores the transaction in the stockHistory
+        and finally calls the SaveProgress function.
         """
         aka = self.dialog.content_cls
 
@@ -351,7 +373,7 @@ class StockApp(MDApp):
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
         
-        if len(self.stockHistory) == 0: # Removes the "No recent trades label.
+        if recentTradesLabels[0].text == "No recent trades to show.": # Removes the "No recent trades label.
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[0])
 
         if len(recentTradesLabels) > 10:
@@ -376,7 +398,9 @@ class StockApp(MDApp):
 
     def Sell(self, *args):
         """
-        It updates the amount of money the user has in hand and the amount of stocks from the company the user has.
+        It updates the amount of money and stocks the user has. Then it updates the amount of money the user spent on stocks,
+        prepares the graphs and portfolio to update, updates the recent trades, stores the transaction in the stockHistory
+        and finally calls the SaveProgress function.
         """
         aka = self.dialog.content_cls
 
@@ -403,7 +427,7 @@ class StockApp(MDApp):
         ### Add the transaction to the recent trades and the full history trades. If recent trades has 10 childen then it deletes the last one.
         recentTradesLabels = self.root.get_screen("main").ids['recent_trades'].children
         
-        if len(self.stockHistory) == 0: #  Removes the "No recent trades label.
+        if recentTradesLabels[0].text == "No recent trades to show.": #  Removes the "No recent trades label.
             self.root.get_screen("main").ids['recent_trades'].remove_widget(recentTradesLabels[0])
 
         if len(recentTradesLabels) > 10:
@@ -428,7 +452,7 @@ class StockApp(MDApp):
     
     def History(self, *args):
         """
-        Opens the whole hsitory dialog box.
+        Opens the whole history dialog box.
         Containing dates and time of the trades made by the user.
         """
         if len(self.stockHistory) == 0:
@@ -472,7 +496,7 @@ class BuyContent(MDBoxLayout):
 
     def Decrease(self):
         """
-        Increments the value of the slider and the text input in the Buy Content dialog box.
+        Decreases the value of the slider and the text input in the Buy Content dialog box.
         """
         currentValue = int(self.ids.text_input.text)
         if currentValue > 0:
@@ -511,7 +535,7 @@ class SellContent(MDBoxLayout):
 
     def Decrease(self):
         """
-        Increments the value of the slider and the text input in the Sell Content dialog box.
+        Decreases the value of the slider and the text input in the Sell Content dialog box.
         """
         currentValue = int(self.ids.text_input.text)
         if currentValue > 0:
@@ -523,7 +547,7 @@ class SellContent(MDBoxLayout):
     def Validation(self, *args):
         """
         Checks that the input value in the text input field is correct.
-        Example if selling 100 stocks is possible with the amount of cash and if not it defaults to max.
+        Example if selling 100 stocks with the amount the user has.
         """
         if int(args[0]) > int(self.ids.sell_slider.max):
             self.ids.text_input.text = str(int(self.ids.sell_slider.max))
@@ -538,6 +562,7 @@ class HistoryContent(MDBoxLayout):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Loads all the transactions as labels to show them.
         for label in App.get_running_app().stockHistory:
             newLabel = MDLabel(text=label, font_name='fonts/SF-Pro-Display-Regular.ttf',font_size=  self.ids.all_trades.fontSize)
             self.ids.all_trades.add_widget(newLabel)

@@ -80,7 +80,7 @@
                         md_bg_color: '#008000'
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
-                        on_press: print("Not implemented yet")
+                        on_press: app.root.set_current('guide')
 
         MDBottomNavigationItem:
             name: 'screen 2'
@@ -111,7 +111,7 @@
                         height: self.minimum_height
 
                         MDLabel:
-                            text: f"Cash: {round(app.userMoney, 2)}"
+                            text: f"Cash: $ {round(app.userMoney, 2)}"
                             font_name: bottom_nav.fontTitle
                             size_hint_y: None
                             pos_hint: {'center_x': .5, 'center_y': .5}

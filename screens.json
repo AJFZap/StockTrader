@@ -43,5 +43,10 @@
 	"import": "from libs.uix.baseclass.settings import Settings",
 	"object": "Settings()",
 	"kv": "libs/uix/kv/settings.kv"
+	},
+	"guide": {
+	"import": "from libs.uix.baseclass.guide import Guide",
+	"object": "Guide()",
+	"kv": "libs/uix/kv/guide.kv"
 	}
 }

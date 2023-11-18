@@ -1,0 +1,60 @@
+#:kivy 2.2.1
+
+<Guide>:
+    name: 'guide'
+
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 1
+        canvas:
+            Color:
+                rgba: (1/255,33/255,72/255,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        MDTopAppBar:
+            title: "Guide"
+            left_action_items: [["arrow-left", lambda x: root.BackToMenu()]]
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1, .75
+            Image:
+                id: tutorial_image
+                source: 'images/tutorial_images/generalScreen.png'
+                fit_mode: "contain"
+
+        MDBoxLayout:
+            fontSize: '30sp'
+            fontName: 'fonts/SF-Pro-Display-Regular.ttf'
+            size_hint: 1, .15
+            padding: 10
+            spacing: 10
+ 
+            MDRectangleFlatButton:
+                id: previous
+                text: "Previous"
+                font_size: self.parent.fontSize
+                font_name: self.parent.fontName
+                theme_text_color: "Custom"
+                text_color: "#D4D4D9"
+                line_color: "black"
+                md_bg_color: (1/255,33/255,72/255,1)
+                md_bg_color_disabled: "black"
+                size_hint: .30, 1
+                disabled: True
+                on_press: root.ImageChange(self)
+
+            MDRectangleFlatButton:
+                id: next
+                text: "Next"
+                font_size: self.parent.fontSize
+                font_name: self.parent.fontName
+                theme_text_color: "Custom"
+                text_color: "#D4D4D9"
+                line_color: "black"
+                md_bg_color: (1/255,33/255,72/255,1)
+                md_bg_color_disabled: "black"
+                size_hint: .30, 1
+                on_press: root.ImageChange(self)
