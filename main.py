@@ -16,7 +16,8 @@ import datetime
 import json
 import os
 
-# TODO Minor bug: Sometimes the plots in graphs are created zoomed, I don't know why.
+# TODO Minor bug: Sometimes the plots in graphs are created zoomed, it has something to do with the scalable property
+# wich in normal circurmstances is set to "normal", but when the widget gets smaller in size it changes to "scalable".
 
 ### Improvements that could work: 
 # -1) New Data table column with the payed for each stock showing the median paid.
