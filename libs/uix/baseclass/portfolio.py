@@ -42,7 +42,7 @@ class Portfolio(Screen):
                         size_hint=(1, 1),
                         pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                         rows_num= 6,
-                        background_color_header= (76/255,174/255,81/255,1),
+                        background_color_header= (0/255,128/255,0/255,1),
                         background_color_cell= (1/255,33/255,72/255,1),
                         background_color_selected_cell= (1/255,33/255,72/255,1),
                         column_data= [
@@ -87,7 +87,7 @@ class Portfolio(Screen):
                             size_hint=(1, 1),
                             pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                             rows_num= 6,
-                            background_color_header= (76/255,174/255,81/255,1),
+                            background_color_header= (0/255,128/255,0/255,1),
                             background_color_cell= (1/255,33/255,72/255,1),
                             background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
@@ -121,7 +121,7 @@ class Portfolio(Screen):
                             size_hint=(1, 1),
                             pos_hint= {'center_x': 0.5, 'center_y': 0.5},
                             rows_num= 6,
-                            background_color_header= (76/255,174/255,81/255,1),
+                            background_color_header= (0/255,128/255,0/255,1),
                             background_color_cell= (1/255,33/255,72/255,1),
                             background_color_selected_cell= (1/255,33/255,72/255,1),
                             column_data= [
