@@ -26,6 +26,7 @@ class Settings(Screen):
                 buttons=[
                     MDRaisedButton(
                         text="Wipe",
+                        md_bg_color= '#008000',
                         on_release=self.ExtraConfirmation,
                     ),
                     MDFlatButton(
@@ -51,6 +52,7 @@ class Settings(Screen):
                 buttons=[
                     MDRaisedButton(
                         text="Yes, wipe my data",
+                        md_bg_color= '#008000',
                         on_release=self.WipeData,
                     ),
                     MDFlatButton(

@@ -266,7 +266,7 @@ class StockApp(MDApp):
 
         if not self.dialogBuy:
             self.dialog = MDDialog(
-                title=f"Buy Stocks - {stockName}", # To change the pos to the center go to kivymd/uix/dialog.kv--> id:title -->halign: "center"
+                title=f"Buy Stocks - {stockName}",
                 md_bg_color=(1/255,33/255,72/255,1),
                 on_dismiss= self.RunClock,
                 type="custom",

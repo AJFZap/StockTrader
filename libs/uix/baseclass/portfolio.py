@@ -13,7 +13,6 @@ fig = plt.figure()
 fig.patch.set_facecolor('#012148d9')
 
 ### On this one we update the graphic transforming the matplot plot an image because Kivy_garden.matplotlib doesn't support pie charts.
-### To change the background color of the MDDataTable I overrided the MDDataTable file in the kivymd.uix.datatables location.
 ### If for whatever reason you want the Data Table to adapt to different sizes of screen on update the just add the same 'self.dpAssign = Window.size[0]/22' on the Update().
 
 class Portfolio(Screen):
