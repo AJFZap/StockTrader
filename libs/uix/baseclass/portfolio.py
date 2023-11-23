@@ -35,7 +35,7 @@ class Portfolio(Screen):
             self.PlotPie()
             self.ids.graph.source = "images/piechart.png"
 
-        self.dpAssign = Window.size[0]/22
+        self.dpAssign = Window.size[0]/44 # Divide by 22 on pc and 44 on mobile.
 
         self.table = MDDataTable(
                         size_hint=(1, 1),
