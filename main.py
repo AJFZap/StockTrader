@@ -16,7 +16,6 @@ from kivy.app import App
 import pandas as pd
 import datetime
 import json
-import os
 
 # TODO Minor bug: Sometimes the plots in graphs are created zoomed, it has something to do with the scalable property
 # wich in normal circurmstances is set to "normal", but when the widget gets smaller in size it changes to "scalable".
