@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
-from kivy_garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+from garden_matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import numpy as np
 from kivy.clock import Clock
