@@ -21,8 +21,8 @@
             MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
-                    padding: 20
-                    spacing: 20
+                    padding: dp(20)
+                    spacing: dp(20)
                     fontSize: '30sp'
 
                     canvas:
@@ -59,18 +59,6 @@
                         pos_hint:{'center_y': 1}
                     
                     MDRectangleFlatButton:
-                        text: "Settings"
-                        font_size: self.parent.fontSize
-                        font_name: bottom_nav.fontName
-                        theme_text_color: "Custom"
-                        text_color: "#D4D4D9"
-                        line_color: '#008000'
-                        md_bg_color: '#008000'
-                        size_hint: .8, .1
-                        pos_hint: {'center_x': 0.5}
-                        on_press: app.root.set_current('settings')
-                    
-                    MDRectangleFlatButton:
                         text: "Investing Guide"
                         font_size: self.parent.fontSize
                         font_name: bottom_nav.fontName
@@ -81,6 +69,18 @@
                         size_hint: .8, .1
                         pos_hint: {'center_x': 0.5}
                         on_press: app.root.set_current('guide')
+                    
+                    MDRectangleFlatButton:
+                        text: "Settings"
+                        font_size: self.parent.fontSize
+                        font_name: bottom_nav.fontName
+                        theme_text_color: "Custom"
+                        text_color: "#D4D4D9"
+                        line_color: '#008000'
+                        md_bg_color: '#008000'
+                        size_hint: .8, .1
+                        pos_hint: {'center_x': 0.5}
+                        on_press: app.root.set_current('settings')
 
         MDBottomNavigationItem:
             name: 'screen 2'
@@ -120,11 +120,11 @@
 
                         MDGridLayout:
                             cols: 2
-                            padding: 20
-                            spacing: 20
+                            padding: dp(20)
+                            spacing: dp(20)
                             size_hint: 1, None
                             height: self.minimum_height
-                            row_default_height: 400
+                            row_default_height: dp(400)
                             row_force_default: True
                             fontSize: '20sp'
                             
@@ -133,8 +133,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "AAPL"
                                 screenGraph: "first"
                                 posDF: app.randomRow # This holds the value of the position in the Data Frame, to be able to update the value.
@@ -207,8 +207,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "TSLA"
                                 screenGraph: "second"
                                 posDF: app.randomRow
@@ -281,8 +281,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "GOOGL"
                                 screenGraph: "third"
                                 posDF: app.randomRow
@@ -356,8 +356,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "AMZN"
                                 screenGraph: "fourth"
                                 posDF: app.randomRow
@@ -430,8 +430,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "^GSPC"
                                 screenGraph: "fifth"
                                 posDF: app.randomRow
@@ -504,8 +504,8 @@
                                 style: "outlined"
                                 md_bg_color: (1/255,33/255,72/255,1)
                                 radius: [dp(20), dp(20), dp(20), dp(20)]
-                                padding: 10
-                                spacing: 10
+                                padding: dp(10)
+                                spacing: dp(10)
                                 name: "^IXIC"
                                 screenGraph: "sixth"
                                 posDF: app.randomRow
@@ -580,8 +580,8 @@
             MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
-                    padding: 20
-                    spacing: 20
+                    padding: dp(20)
+                    spacing: dp(20)
                     fontSize: '30sp'
 
                     canvas:
@@ -616,8 +616,8 @@
                             size_hint: 1, None
                             height: self.minimum_height
                             halign: 'center'
-                            spacing: 30
-                            padding: 20
+                            spacing: dp(30)
+                            padding: dp(20)
 
                             MDLabel:
                                 text: "No recent trades to show."
@@ -626,7 +626,7 @@
                                 outline_colour: (0, 0, 0, 1)
                                 theme_text_color: "Custom"
                                 text_color: "#D4D4D9"
-                                font_size: 20
+                                font_size: '20sp'
                     
                     MDRectangleFlatButton:
                         text: "Portfolio"

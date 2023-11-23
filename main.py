@@ -2,10 +2,12 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.clock import Clock
 from random import randint
+from kivy.utils import platform
 from kivymd.toast import toast
 from kivy.properties import NumericProperty
 from libs.uix.root import Root
 from kivymd.app import MDApp
+from kivy.storage.jsonstore import JsonStore
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -23,6 +25,10 @@ import os
 # -1) New Data table column with the payed for each stock showing the median paid.
 # -2) On the "Sell" show how much did you paid for that stock and maybe show the current stock price with either green or red 
 #     depending if it's higher or lower than the paid amount.
+
+if platform == "android":
+    from android.permissions import request_permissions, Permission
+    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
@@ -50,6 +56,9 @@ class StockApp(MDApp):
     dialogSell = None
     dialogHistory = None
 
+    # Storage
+    store = JsonStore('user_data.json')
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -74,7 +83,7 @@ class StockApp(MDApp):
         and switches the screen to the market.
         Then checks the rank of the user and schedules the updating of the stocks and the rank checking.
         """
-        if os.path.exists("./Save_Data/user_data.json"):
+        if self.store.exists('user'):
             self.LoadProgress()
             Clock.schedule_once(self.Switch, 3)
 
@@ -88,32 +97,26 @@ class StockApp(MDApp):
         Switches the screen to the Market one.
         """
         self.root.get_screen("main").ids.bottom_nav.switch_tab('screen 2')
+        return
     
     def SaveProgress(self):
         """
         Saves the progress of the user by saving the amount of stocks from each company that they have and their cash on hand.
         """
-        if os.path.exists("./Save_Data/user_data.json"):
-            f = open("./Save_Data/user_data.json", "w")
-        else:
-            f = open("./Save_Data/user_data.json", "x")
-        
-        jsonDict = {"money": round(self.userMoney, 2), "stocks": self.ownedStocks, "spent": self.spentOnStocks, "history": self.stockHistory}
-
-        f.write(json.dumps(jsonDict))
-        f.close()
+        self.store.put("user", money= round(self.userMoney, 2), stocks= self.ownedStocks, spent= self.spentOnStocks, history= self.stockHistory)
+        return
     
     def LoadProgress(self):
         """
         If the user has saved data then it will load it.
         """
-        with open("./Save_Data/user_data.json", 'r') as json_file:
+        with open("user_data.json", 'r') as json_file:
             data = json.loads(json_file.read())
 
-            self.userMoney = data['money']
-            self.ownedStocks = data['stocks']
-            self.spentOnStocks = data['spent']
-            self.stockHistory = data['history']
+            self.userMoney = data['user']['money']
+            self.ownedStocks = data['user']['stocks']
+            self.spentOnStocks = data['user']['spent']
+            self.stockHistory = data['user']['history']
         
         return
     
