@@ -101,7 +101,7 @@ from kivy.properties import ObjectProperty
 from kivy.base import EventLoop
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.image import Image
-from kivy_garden.matplotlib.backend_kivy import (
+from garden_matplotlib.backend_kivy import (
     FigureCanvasKivy,
     FigureManagerKivy,
     NavigationToolbar2Kivy,

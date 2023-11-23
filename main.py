@@ -2,7 +2,7 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.clock import Clock
 from random import randint
-from kivy.utils import platform
+# from kivy.utils import platform
 from kivymd.toast import toast
 from kivy.properties import NumericProperty
 from libs.uix.root import Root
@@ -25,9 +25,9 @@ import json
 # -2) On the "Sell" show how much did you paid for that stock and maybe show the current stock price with either green or red 
 #     depending if it's higher or lower than the paid amount.
 
-if platform == "android":
-    from android.permissions import request_permissions, Permission
-    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+# if platform == "android":
+#     from android.permissions import request_permissions, Permission
+#     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
 aapl = pd.read_csv('stocksDB/aapl.csv')
 tsla = pd.read_csv('stocksDB/tsla.csv')
