@@ -10,3 +10,5 @@ matplotlib==3.7.2
 matplot==0.1.9
 plyer==2.1.0
 yfinance==0.2.28
+
+# Refer to the garden_matplotlib folder for the kivy_garden stuff for mobile deployment.

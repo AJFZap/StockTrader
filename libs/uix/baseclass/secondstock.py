@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from kivy.clock import Clock
 
-plt.style.use('seaborn-v0_8-darkgrid')
+plt.style.use('seaborn-darkgrid')
 
 thing = App.get_running_app()
 

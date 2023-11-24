@@ -19,6 +19,7 @@ import json
 
 # TODO Minor bug: Sometimes the plots in graphs are created zoomed, it has something to do with the scalable property
 # wich in normal circurmstances is set to "normal", but when the widget gets smaller in size it changes to "scalable".
+# TODO Minor bug: Sometimes the portfolio label background color won't load on the image for some reason so it will be hard to read until the app is restarted.
 
 ### Improvements that could work: 
 # -1) New Data table column with the payed for each stock showing the median paid.
@@ -51,11 +52,12 @@ class StockApp(MDApp):
     stockHistory= [] # Holds all the transactions made by the user.
     userMoney = NumericProperty(10000.00)
     
+    # Content Dialogs.
     dialogBuy = None
     dialogSell = None
     dialogHistory = None
 
-    # Storage
+    # Storage.
     store = JsonStore('user_data.json')
 
     def __init__(self, **kwargs):
