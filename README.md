@@ -23,6 +23,7 @@ This is a Kivy-based application that allows users to learn about stock investin
 * Numpy
 * Matplotlib
 * Yfinance
+* Other dependencies listed in requirements.txt
 
 ## Technologies Used
 
